@@ -109,25 +109,25 @@ void deleteTail (List &l){
     }
 }
 
-void deleteNode (List &l, ptrNode q){
-    if (q == l.pHead)
+void deleteNode (List &l, ptrNode deletingNode){
+    if (deletingNode == l.pHead)
         deleteHead(l);
-    else if (q == l.pTail)
+    else if (deletingNode == l.pTail)
         deleteTail(l);
     else{
-        ptrNode r  = q->pNext;
-        *q = *r;
-        delete r;
+        ptrNode tempNode  = deletingNode->pNext;
+        *deletingNode = *tempNode;
+        delete tempNode;
     }   
 }
 
 void deleteList(List &l){
-    ptrNode q;
-    ptrNode p = l.pHead;
-    while (p){
-        q = p;
-        p = q->pNext;
-        delete q;
+    ptrNode tempNode1;
+    ptrNode tempNode2 = l.pHead;
+    while (tempNode2){
+        tempNode1 = tempNode2;
+        tempNode2 = tempNode1->pNext;
+        delete tempNode1;
     }
     l.pHead = l.pTail = NULL;
 }
@@ -168,20 +168,6 @@ void checkPosition(int &index, int n){
         cout << "Vi tri da nhap khong hop le. Hay nhap lai: ";
         cin >> index;
     }
-}
-
-bool checkValue(List l, int x){
-    ptrNode p = l.pHead;
-    int count = 0;
-    while(p){
-        if (p->data == x)
-            count++;
-        p = p->pNext;
-    }
-    if (count == 0)
-        return false;
-    else
-        return true;
 }
 
 int countNumberOfValue(List l, int x){
@@ -308,7 +294,7 @@ int main(){
                 int data;
                 cout << "-Nhap vao gia tri Node muon xoa: ";
                 cin >> data;
-                while (checkValue(l,data) == false){
+                while (countNumberOfValue(l,data) == 0){
                     cout << "Khong co Node nao mang gia tri da nhap. Hay nhap lai: ";
                     cin >> data;
                 }
