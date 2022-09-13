@@ -181,6 +181,49 @@ int countNumberOfValue(List l, int x){
     return count;
 }
 
+void createListFromArray(List &l, int a[], int n){
+    for (int i = 0; i < n; i++){
+        insertTail(l, a[i]);
+    }
+}
+
+void create2NewLinkedList(List originalList, List &newList1, List &newList2){
+    ptrNode temp = originalList.pHead;
+    while(temp){
+        //Lẻ
+        if((temp->data %2) != 0)
+            insertTail(newList1, temp->data);
+        //Chẵn
+        else
+            insertTail(newList2, temp->data);
+        temp = temp->next;
+    }
+}
+
+void MoveToFront(ptrNode &Head, ptrNode &Tail, ptrNode MovingNode){
+    if (MovingNode == Head)
+        return;
+    else if (MovingNode == Tail){
+        ptrNode temp = Head;
+        while(temp->pNext->pNext != NULL)
+            temp = temp->pNext;
+        temp->pNext = NULL;
+        Tail = temp;
+        MovingNode->pNext = Head;
+        Head = MovingNode;
+    }
+    else{
+        ptrNode temp = Head;
+        while(temp->pNext != MovingNode)
+            temp = temp->pNext;
+        temp->pNext = temp->pNext->pNext;
+        MovingNode ->pNext = Head;
+        Head = MovingNode;
+    }
+
+}
+
+
 int main(){
     int n;
     string choice;

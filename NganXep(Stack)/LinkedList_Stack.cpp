@@ -38,6 +38,7 @@ bool isEmpty (Stack stack){
 }
 
 bool isFull (Stack stack){
+    //???
     if (stack.top->pNext == NULL)
         return true;
     else

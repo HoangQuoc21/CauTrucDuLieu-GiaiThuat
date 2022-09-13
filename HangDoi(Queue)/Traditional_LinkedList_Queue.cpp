@@ -118,8 +118,8 @@ int main(){
         cout << "Hang doi da nhap: \n";
         printQueue(queue);
         cout << "============================== MENU ============================\n";
-        cout << "1. Push mot phan tu vao hang doi.\n";
-        cout << "2. Pop phan tu o dau hang doi ra.\n";
+        cout << "1. Push (Enqueue) mot phan tu vao hang doi.\n";
+        cout << "2. Pop (Dequeue) phan tu o dau hang doi ra.\n";
         cout << "3. Doc noi dung phan tu o dau hang doi.\n";
         cout << "0. Thoat chuong trinh.\n";
         cout << "=============================== END ============================\n";
