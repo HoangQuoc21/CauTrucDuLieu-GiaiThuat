@@ -73,7 +73,10 @@ void insertBefore(List &l, ptrNode q, int x){
 void print(List l){
     ptrNode p = l.pHead;
     while (p){
-        cout << p->data << " ";
+        if(p->pNext == NULL)
+            cout << p->data;
+        else
+            cout << p->data << " -> ";
         p = p->pNext;
     }
     cout << endl;
@@ -196,7 +199,7 @@ void create2NewLinkedList(List originalList, List &newList1, List &newList2){
         //Chẵn
         else
             insertTail(newList2, temp->data);
-        temp = temp->next;
+        temp = temp->pNext;
     }
 }
 
