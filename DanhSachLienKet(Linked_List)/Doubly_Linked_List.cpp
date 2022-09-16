@@ -29,29 +29,35 @@ ptrNode createNode(int x){
     ptrNode newNode = new Node;
     if (newNode == NULL)
         return NULL;
-    newNode->data = x;
-    newNode->pNext = NULL;
-    newNode->pPrev = NULL;
-    return newNode;   
+    else{
+        newNode->data = x;
+        newNode->pNext = NULL;
+        newNode->pPrev = NULL;
+        return newNode;   
+    } 
 }
 
 
 
 void insertHead(DList &list, int x){
     ptrNode newNode = createNode(x);
-    if (isEmpty(list) == true)
+    if (isEmpty(list) == true){
         list.pHead = list.pTail = newNode;
+        return;
+    } 
     else{
-        newNode->pNext = list.pHead;
         list.pHead->pPrev = newNode;
+        newNode->pNext = list.pHead;
         list.pHead = newNode;
     }
 }
 
 void insertTail(DList &list, int x){
     ptrNode newNode = createNode(x);
-    if (isEmpty(list) == true)
+    if (isEmpty(list) == true){
         list.pHead = list.pTail = newNode;
+        return;
+    }
     else{
         list.pTail->pNext = newNode;
         newNode->pPrev = list.pTail;
@@ -110,8 +116,8 @@ void removeTail(DList &list){
         list.pTail = list.pTail->pPrev;
         list.pTail->pNext = NULL;
         delete temp;
-        if (list.pHead == NULL)
-            list.pTail == NULL;
+        if (list.pTail == NULL)
+            list.pHead == NULL;
         else
             list.pHead->pPrev == NULL;
     }
@@ -215,11 +221,11 @@ void checkPositive (int &number){
 }
 
 int main(){
-    string choice;
+    string choice = " ";
     DList list;
     int nNode;
 
-    //initDList(list);
+    initDList(list);
 
     system("cls");
     cout << "=================DANH SACH LIEN KET(DOI)================\n";
