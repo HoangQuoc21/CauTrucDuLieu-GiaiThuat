@@ -1,231 +1,223 @@
 #include <iostream>
 using namespace std;
-
-typedef struct Node* ptrNode;
-
-struct Node{
+ 
+struct Node  {
     int data;
-    ptrNode pNext;
-    ptrNode pPrev;
+    Node* pNext;
+    Node* pPrev;
 };
 
-struct DList{
+typedef Node* ptrNode;
+
+struct Dlist{
     ptrNode pHead;
     ptrNode pTail;
 };
+ 
 
-void initDList(DList &list){
-    list.pHead == NULL;
-    list.pTail == NULL;
+
+void initList(Dlist &list){
+    list.pHead = list.pTail = NULL;
 }
+ 
 
-bool isEmpty(DList &list){
-    if (list.pHead == NULL)
-        return true;
-    return false;
-}
-
-ptrNode createNode(int x){
+ptrNode createNode(int x) {
     ptrNode newNode = new Node;
-    if (newNode == NULL)
-        return NULL;
-    else{
-        newNode->data = x;
-        newNode->pNext = NULL;
-        newNode->pPrev = NULL;
-        return newNode;   
-    } 
+    newNode->data = x;
+    newNode->pPrev = NULL;
+    newNode->pNext = NULL;
+    return newNode;
+};
+
+bool isEmpty(Dlist list){
+    return (list.pHead == NULL);
 }
+ 
 
-
-
-void insertHead(DList &list, int x){
+void insertHead(Dlist &list, int x){
     ptrNode newNode = createNode(x);
-    if (isEmpty(list) == true){
-        list.pHead = list.pTail = newNode;
-        return;
-    } 
-    else{
-        list.pHead->pPrev = newNode;
-        newNode->pNext = list.pHead;
+    if(isEmpty(list)) {
         list.pHead = newNode;
-    }
-}
-
-void insertTail(DList &list, int x){
-    ptrNode newNode = createNode(x);
-    if (isEmpty(list) == true){
-        list.pHead = list.pTail = newNode;
+        list.pTail = newNode;
         return;
     }
-    else{
-        list.pTail->pNext = newNode;
-        newNode->pPrev = list.pTail;
+    list.pHead->pPrev = newNode;
+    newNode->pNext = list.pHead;
+    list.pHead = newNode;
+}
+ 
+
+void insertTail(Dlist &list, int x) {
+    ptrNode newNode = createNode(x);
+    if(isEmpty(list)) {
+        list.pHead = newNode;
         list.pTail = newNode;
+        return;
     }
+    list.pTail->pNext = newNode;
+    newNode->pPrev = list.pTail;
+    list.pTail = newNode;
 }
 
-void insertAfter(DList &list, ptrNode baseNode, int x){
-    if (list.pTail == baseNode)
-        insertTail(list, x);
+void insertAfter(Dlist &list, ptrNode currNode, int x){
+    if (currNode == list.pTail)
+        insertTail(list,x);
     else{
-        ptrNode newNode = createNode(x);
-        ptrNode nextNode = baseNode->pNext;
-        baseNode->pNext = newNode;
-        newNode->pPrev = baseNode;
-        newNode->pNext = nextNode;
-        if (nextNode!=NULL)
-            nextNode->pPrev = newNode;
-    }
-}
+        //currNode -> addNode -> afterNode
+        ptrNode addNode = createNode(x);
+        ptrNode afterNode = currNode->pNext;
 
-void insertBefore(DList &list, ptrNode baseNode, int x){
-    if (list.pHead == baseNode)
+        currNode->pNext = addNode;
+        addNode->pPrev = currNode;
+        addNode->pNext = afterNode;
+        afterNode->pPrev = addNode;
+    }
+} 
+
+void insertBefore(Dlist &list, ptrNode currNode, int x){
+    if (currNode == list.pHead)
         insertHead(list, x);
     else{
-        ptrNode newNode = createNode(x);
-        ptrNode prevNode = baseNode->pPrev;
+        //beforeNode <- addNode <- currNode
+        ptrNode addNode =  createNode(x);
+        ptrNode beforeNode = currNode->pPrev;
 
-        prevNode->pNext = newNode;
-        newNode->pPrev = prevNode;
-        newNode->pNext = baseNode;
-        baseNode->pPrev = newNode;
+        currNode->pPrev = addNode;
+        addNode->pNext = currNode;
+        addNode->pPrev = beforeNode;
+        beforeNode->pNext = addNode;
     }
 }
 
-void removeHead(DList &list){
-    if (isEmpty(list))
+void removeHead(Dlist &list) {
+    if(isEmpty(list)) {
         return;
-    else{
-        ptrNode temp = list.pHead;
-        list.pHead = list.pHead->pNext;
-        list.pHead->pPrev = NULL;
-        delete temp;
-        if (list.pHead == NULL) 
-            list.pTail = NULL;
-        else
-            list.pTail->pNext = NULL;
     }
+    list.pHead = list.pHead->pNext;
+    list.pHead->pPrev = NULL;
+}
+ 
+
+void removeTail(Dlist &list) {
+    if(isEmpty(list)) {
+        return;
+    }
+    list.pTail = list.pTail->pPrev;
+    list.pTail->pNext = NULL;
 }
 
-void removeTail(DList &list){
-    if (isEmpty(list))
-        return;
-    else{
-        ptrNode temp = list.pTail;
-        list.pTail = list.pTail->pPrev;
-        list.pTail->pNext = NULL;
-        delete temp;
-        if (list.pTail == NULL)
-            list.pHead == NULL;
-        else
-            list.pHead->pPrev == NULL;
-    }
-}
-
-void removeAfter(DList &list,ptrNode beforeNode){
-    if (isEmpty(list) || beforeNode == NULL)
-        return;
-    else if (beforeNode->pNext == list.pTail)
+void removeAfter(Dlist &list,ptrNode currNode){
+    if (currNode->pNext == list.pTail)
         removeTail(list);
     else{
-        // beforeNode -> deleteNode -> AfterNode
-        ptrNode deleteNode = beforeNode->pNext;
-        ptrNode afterNode = beforeNode->pNext->pNext;
+    //currNode -> deleteNode -> nextNode
+        ptrNode deleteNode = currNode->pNext;
+        ptrNode nextNode = currNode->pNext->pNext;
 
-        beforeNode->pNext = afterNode;
-        afterNode->pPrev = beforeNode;
+        currNode->pNext = nextNode;
+        nextNode->pPrev = currNode;
         deleteNode->pNext = deleteNode->pPrev = NULL;
-
         delete deleteNode;
     }
-
 }
 
-void removeBefore(DList &list,ptrNode afterNode){
-    if (isEmpty(list) || afterNode == NULL)
-        return;
-    else if(afterNode->pPrev == list.pHead)
+void removeBefore(Dlist &list,ptrNode currNode){
+    if(currNode->pPrev == list.pHead)
         removeHead(list);
     else{
-        // beforeNode -> deleteNode -> AfterNode
-        ptrNode deleteNode = afterNode->pPrev;
-        ptrNode beforeNode = afterNode->pPrev->pPrev;
+        //beforeNode <- deleteNode <- currNode
+        ptrNode deleteNode = currNode->pPrev;
+        ptrNode beforeNode = currNode->pPrev->pPrev;
 
-        afterNode->pPrev = beforeNode;
-        beforeNode->pNext = afterNode;
-        deleteNode->pNext = deleteNode->pPrev = NULL;
-
+        currNode->pPrev = beforeNode;
+        beforeNode->pNext = currNode;
+        deleteNode->pPrev = deleteNode->pNext = NULL;
         delete deleteNode;
     }
 }
 
-void removeNode(DList &list, int k){
+void removeNode(Dlist &list, int k){
     if (k == list.pHead->data)
         removeHead(list);
     else if (k == list.pTail->data)
         removeTail(list);
     else{
-        // beforeNode -> deleteNode -> AfterNode
-        ptrNode deleteNode = list.pHead;
-        //Tìm node của khóa k
-        while(deleteNode->data != k)
-            deleteNode = deleteNode->pNext;
-
-        //Nếu không tìm thấy k
-        if (deleteNode == NULL)
-            return ;
-        else{
-            ptrNode beforeNode = deleteNode->pPrev;
-            ptrNode afterNode = deleteNode->pNext;
-
-            beforeNode->pNext = afterNode;
-            afterNode->pPrev = beforeNode;
-            deleteNode->pNext = beforeNode->pPrev = NULL;
-
-        delete deleteNode;
+        ptrNode currNode = list.pHead;
+        while(currNode){
+            if(currNode->data ==k){
+                //beforeNode -> currNode -> afterNode;
+                ptrNode beforeNode = currNode->pPrev;
+                ptrNode afterNode = currNode->pNext;
+               
+                beforeNode->pNext = afterNode;
+                afterNode->pPrev = beforeNode;
+                currNode->pNext = currNode->pPrev = NULL;
+                delete currNode;
+                return;
+            }
+            currNode = currNode->pNext;
         }
     }
 }
 
-void destroyDList(DList &list){
-    if (isEmpty(list))
-        return;
-    else{
-         ptrNode temp1 = list.pHead;
-        ptrNode temp2;
-        //temp2 -> temp1 -> NULL
-        while(temp1->pNext != NULL){
-            temp2 = temp1;
-            temp1 = temp1->pNext;
-            delete temp2;
-        }
+void deleteList(Dlist &list){
+    ptrNode temp1 = list.pHead;
+    ptrNode temp2;
+    while(temp1!= NULL){
+        temp2 = temp1;
+        temp1 = temp1->pNext;
+        delete temp2;
+    }
     list.pHead = list.pTail = NULL;
-    }
 }
+ 
 
-void printList(DList list){
+
+void Print(Dlist list){
     ptrNode temp = list.pHead;
+    cout << "DSLK da nhap in xuoi( -> ): \n";
     while(temp){
-        cout << temp->data << " <-> ";
+        if (temp->pNext == NULL)
+            cout << temp->data;
+        else{
+            cout << temp->data << " <-> ";
+        }
         temp = temp->pNext;
     }
     cout << endl;
 }
+ 
 
-void checkPositive (int &number){
+void ReversePrint(Dlist list) {
+    ptrNode temp = list.pTail;
+    if(temp == NULL) return; // empty list, exit
+    // Traversing backward using prev pointer
+    cout << "DSLK da nhap in nguoc( -> ): \n";
+    while(temp){
+        if (temp->pPrev == NULL)
+            cout << temp->data;
+        else{
+            cout << temp->data << " <-> ";
+        }
+        temp = temp->pPrev;
+    }
+    cout << endl;
+}
+
+void checkPositive(int &number){
     while (number <= 0){
-        cout << "So duong da nhap khong hop le. Hay nhap lai: ";
+        cout << "So da nhap khong hop le. Hay nhap lai: ";
         cin >> number;
     }
 }
+ 
+int main() {
+    
 
-int main(){
-    string choice = " ";
-    DList list;
+    Dlist list;
+    initList(list);
+    string choice;
     int nNode;
-
-    initDList(list);
 
     system("cls");
     cout << "=================DANH SACH LIEN KET(DOI)================\n";
@@ -239,15 +231,82 @@ int main(){
         cin >> data;
         insertTail(list,data);
     }
-
     while(choice != "0"){
         system("cls");
         cout << "=================DANH SACH LIEN KET(DOI)================\n";
         cout << "So luong Node hien co: " << nNode << endl;
-        cout << "DSLK da nhap: ";
-        printList(list);
+        Print(list);
+        //Quốc lười thêm option vào MENU :D 
+        cout << "==========================MENU==========================\n";
+        cout << "1. Them Node vao dau DSLK.\n";
+        cout << "2. Them Node vao cuoi DSLK.\n";
+        cout << "3. \n";
+        cout << "4. Xoa Node o dau DSLK.\n";
+        cout << "5. Xoa Node o cuoi DSLK.\n";
+        cout << "6.\n";
+        cout << "7.\n";
+        cout << "8. In nguoc DSLK da nhap.\n";
+        cout << "0. Thoat chuong trinh.\n";
+        cout << "==========================END===========================\n";
+        cout << "Lua chon cua ban: ";
+        cin >> choice;
+        cout << "------------------------------------------------\n";
+        if(choice == "1"){
+            int data;
+            cout << "Nhap vao du lieu cua Node: ";
+            cin >> data;
+            insertHead(list,data);
+            nNode++;
+            cout << "Da them Node vao dau DSLK.\n";
+        }
+        else if (choice == "2"){
+            int data;
+            cout << "Nhap vao du lieu cua Node: ";
+            cin >> data;
+            insertTail(list,data);
+            nNode++;
+            cout << "Da them Node vao cuoi DSLK.\n";
+        }
+        else if (choice == "3"){
+            
+        }
+        else if (choice == "4"){
+            if (isEmpty(list) == 0){
+                removeHead(list);
+                nNode--;
+                cout << "Da xoa Node o dau DSLK.\n";
+            }
+            else
+                cout << "DSLK trong nen khong xoa Node nao duoc.\n";
+        }
+        else if (choice == "5"){
+            if (isEmpty(list) == 0){
+                removeTail(list);
+                nNode--;
+                cout << "Da xoa Node o dau DSLK.\n";
+            }
+            else
+                cout << "DSLK trong nen khong xoa Node nao duoc.\n";
+        }
+        else if (choice == "6"){
+
+        }
+        else if (choice == "7"){
+
+        }
+        else if (choice == "8")
+            ReversePrint(list);
+        else if (choice == "0"){
+
+        }
+        else 
+            cout << "Lua chon khong hop le.\n";
+
         system("pause");
     }
-    destroyDList(list);
+   
+ 
+    
+    deleteList(list);
     return 0;
 }
