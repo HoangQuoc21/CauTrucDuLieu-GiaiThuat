@@ -18,7 +18,7 @@ void initList(List &l){
     l.pTail = NULL;
 }
 
-int isEmpty(List &l){
+bool isEmpty(List &l){
     return (l.pHead == NULL && l.pTail == NULL);
 }
 
@@ -56,6 +56,8 @@ void insertAfter(List &l, ptrNode q, int x){
     if (l.pTail == q)
         l.pTail = p;
 }
+
+
 
 void insertBefore(List &l, ptrNode q, int x){
     if (l.pHead == q)
@@ -122,6 +124,26 @@ void deleteNode (List &l, ptrNode deletingNode){
         *deletingNode = *tempNode;
         delete tempNode;
     }   
+}
+
+void removebefore(List &list, ptrNode currNode){
+    if (isEmpty(list) || currNode == NULL)
+        return;
+    else if (list.pHead->pNext == currNode)
+        deleteHead(list);
+    else{
+        //beforeNode -> deleteNode -> currNode
+        ptrNode beforeNode = list.pHead;
+        ptrNode deleteNode;
+
+        while(beforeNode->pNext->pNext == currNode)
+            beforeNode = beforeNode->pNext;
+
+        deleteNode = beforeNode->pNext;
+        beforeNode->pNext = currNode;
+        deleteNode->pNext = NULL;
+        delete deleteNode;
+    }
 }
 
 void deleteList(List &l){
@@ -223,7 +245,50 @@ void MoveToFront(ptrNode &Head, ptrNode &Tail, ptrNode MovingNode){
         MovingNode ->pNext = Head;
         Head = MovingNode;
     }
+}
 
+void reverseList(List &list){
+    if (isEmpty(list))
+        return;
+    else{
+        ptrNode prevNode = NULL;
+        ptrNode nextNode = NULL;
+        ptrNode currNode = list.pHead;
+        while(currNode){
+            nextNode = currNode->pNext;
+            currNode->pNext = prevNode;
+            prevNode = currNode;
+            currNode = nextNode;
+        }
+        list.pHead = prevNode;
+    }
+}
+
+int countNode (List list){
+    int count = 0;
+    if (!isEmpty(list)){
+        ptrNode tempNode = list.pHead;
+        while(tempNode){
+            count++;
+            tempNode = tempNode->pNext;
+        }
+    }
+    return count;
+}
+
+void findKNode(List list, int k){
+    //Nếu tính vị trí của Node đầu tiên là 0
+    if (k-1 < 0 || k - 1 >= countNode(list)|| isEmpty(list))
+        return;
+    else{
+        int count = 0;
+        ptrNode tempNode = list.pHead;
+        while(count != k){
+            tempNode = tempNode->pNext;
+            count++;
+        }
+        cout << &tempNode;
+    }
 }
 
 
@@ -360,6 +425,7 @@ int main(){
         else
             cout << "Lua chon khong hop le.\n";
 
+        
         system("pause");
     }
 
