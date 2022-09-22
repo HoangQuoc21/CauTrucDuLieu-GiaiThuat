@@ -62,7 +62,7 @@ bool isNumberOperand(char character){
     return (character <= '9' && character >= '0');
 }
 
-//Kiểm tra ký tự là toán tử chữ
+//Kiểm tra ký tự là toán tử
 bool isOperator(char character){
     return (character == '*' || character == '/' || character == '+' || character == '-' || character == '&' || character == '^');
 }
@@ -84,33 +84,37 @@ string infixTopostfix(string infix_notation){
     Stack stack;
     initStack(stack);
     //Bắt đầu chuyển từ trung tố sang hậu tố: 
-    //0.1
+    //0.1 Thêm '(' vào stack
     Push(stack, '(');
-    //0.2
+    //0.2 thêm ')' vào biểu thức trung tố
     infix_notation.push_back(')');
     for (int i = 0; i < infix_notation.size(); i++){
-        //1.
+        //1. Duyệt từng ký tự từ trái sang phải
         char x = infix_notation[i];
-        //2.
+        //2. Nếu là toán hạng thì Push vào biểu thức hậu tố
         if (isLetterOperand(x) || isNumberOperand(x))
             postfix_notation.push_back(x);
-        //3.
+        //3. Nếu là dấu '(' thì Push vào stack
         if (x == '(')
             Push(stack,x);
-        //4.
+        //4. Nếu là toán tử thì 
         if (isOperator(x)){
+            //4.1 Nếu trên đỉnh stack là toán tử và toán tử đó có độ ưu tiên lớn hơn toán tử đang xét thì
             while(!isEmpty(stack) && (getPriority(stack.pTop->data) >= getPriority(x)) && isOperator(stack.pTop->data)){
+                //Push toán tử đó vào biểu thức hậu tố
                 char w = Pop(stack);
                 postfix_notation.push_back(w);
             }
+            //4.2 Push toán tử đang xét vào stack
             Push(stack,x);
         }
-        //5.
+        //5. Nếu là dấu ')' thì Pop hết các ký tự trong stack ra đồng thời Push các ký tự đó vào biểu thức hậu tố. Dừng lại khi gặp dấu ')' trong stack 
         if (x == ')'){
             while(!isEmpty(stack) && (stack.pTop->data != '(')){
                 char w = Pop(stack);
                 postfix_notation.push_back(w);
             }
+            //Pop dấu '(' được bỏ vào stack ở bước 0.1 ra
             Pop(stack);
         }
     }
