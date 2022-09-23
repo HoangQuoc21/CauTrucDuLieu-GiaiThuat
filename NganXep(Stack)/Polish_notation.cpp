@@ -149,8 +149,7 @@ char iToc(int i){
 }
 
 //Tính giá trị biểu thức hậu tố
-int EvaluatePostfix(string infix_notation){
-    string postfix_notation = infixToPostfix(infix_notation);
+int EvaluatePostfix(string postfix_notation){
     Stack stack;
     initStack(stack);
     //Duyệt hết qua các phần tử của biểu thức hậu tố từ trái sang phải
@@ -159,7 +158,7 @@ int EvaluatePostfix(string infix_notation){
         //Nếu là toán hạng số thì Push vào stack
         if (isNumberOperand(c))
             Push(stack,c);
-        //Nếu là toán tử thì tính giá trị biểu thức tương ứng với 2 toán hạng ở đỉnh stack
+        //Nếu là toán tử thì tính giá trị biểu thức tương ứng với 2 toán hạng ở đỉnh stack, với số ở trên là tiền số và số ở dưới là hậu số (trong phép tính)
         if (isOperator(c)){
             int x = cToi(Pop(stack));
             int y = cToi(Pop(stack));
@@ -180,6 +179,38 @@ int EvaluatePostfix(string infix_notation){
     return cToi(Pop(stack));
 }
 
+//Tính giá trị biểu thức tiền tố
+int EvaluatePrefix(string prefix_notation){
+    Stack stack;
+    initStack(stack);
+    //Duyệt hết qua các phần tử của biểu thức tiền tố từ phải sang trái
+    for (int i = prefix_notation.size(); i >= 0; i--){
+        char c = prefix_notation[i];
+        //Nếu là toán hạng số thì Push vào stack
+        if (isNumberOperand(c))
+            Push(stack,c);
+        if (isOperator(c)){
+         //Nếu là toán tử thì tính giá trị biểu thức tương ứng với 2 toán hạng ở đỉnh stack, với số ở trên là hậu số và số ở dưới là tiền số (trong phép tính) 
+            int x = cToi(Pop(stack));
+            int y = cToi(Pop(stack));
+            switch(c){
+                case '+': x = x+y; break;
+                case '-': x = x-y; break;
+                case '*': x = x*y; break;
+                case '/': x = x/y; break;
+                case '^': x = pow(x,y); break;
+                case '%': x = x%y; break;
+            }
+            //Sau khi tính xong thì Push kết quả vừa rồi vào stack
+            char z = iToc(x);
+            Push(stack,z);
+        }
+    }
+    //Sau khi duyệt hết biểu thức tiền tố và tính toán thì kết quả của biểu thức hậu tố chính là toán hạng cuối cùng còn trong stack
+    return cToi(Pop(stack));
+}
+
+
 
 int main(){
     system("cls");
@@ -195,6 +226,8 @@ int main(){
         cout << "1. Chuyen sang Bieu Thuc Tien To va tinh gia tri cua no.\n";
         cout << "2. Chuyen sang Bieu thuc Hau To va tinh gia tri cua no.\n";
         cout << "3. Nhap lai Bieu Thuc Trung To.\n";
+        cout << "4. Tinh gia tri cua Bieu Thuc Tien To cho truoc.\n";
+        cout << "5. Tinh gia tri cua Bieu Thuc Hau To cho truoc.\n";
         cout << "0. Thoat chuong trinh.\n";
         cout << "=================================== END =================================\n";
         cout << "Lua chon cua ban la: ";
@@ -202,8 +235,9 @@ int main(){
         cout << "-------------------------------------------------------------------------\n";
         if (choice == "1"){
             string prefix_notation = infixToPrefix(infix_notation);
+            int value = EvaluatePrefix(prefix_notation);
             cout << "-Bieu Thuc Tien To: " << prefix_notation << endl;
-            cout << "-Gia tri cua Bieu Thuc Tien To (Chi dung khi toan hang la so): " << endl;
+            cout << "-Gia tri cua Bieu Thuc Tien To (Chi dung khi toan hang la so): " << value << endl;
         }
         else if (choice == "2"){
             string postfix_notation = infixToPostfix(infix_notation);
@@ -213,6 +247,24 @@ int main(){
         }
         else if (choice == "3"){
             cout << "-Hay nhap Bieu Thuc Trung To: ";
+            cin >> infix_notation;
+        }
+        else if (choice == "4"){
+            string prefix_notation;
+            cout << "-Hay nhap Bieu Thuc Tien To: ";
+            cin >> prefix_notation;
+            int value = EvaluatePrefix(prefix_notation);
+            cout << "Gia tri cua Bieu Thuc Tien To vua nhap la: " << value << endl;
+        }
+        else if (choice == "5"){
+            string postfix_notation;
+            cout << "-Hay nhap Bieu Thuc Tien To: ";
+            cin >> postfix_notation;
+            int value = EvaluatePostfix(postfix_notation);
+            cout << "Gia tri cua Bieu Thuc Tien To vua nhap la: " << value << endl;
+        }
+        else if (choice == "3"){
+            cout << "-Hay nhap Bieu Thuc Hau To: ";
             cin >> infix_notation;
         }
         else if (choice == "0"){
