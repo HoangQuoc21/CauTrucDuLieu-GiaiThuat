@@ -397,7 +397,6 @@ void op1a(){
             cout << number1 << " + " << number2 << "= " << *Sum << endl;
             swap(a,b);
             cout << "After swapping. Number1 =  " << number1 << ", Number2 = " << number2 << endl;  
-            delete a,b,Sum;
         }
         else if (choice == "2")
             break;
@@ -448,6 +447,7 @@ void op1b(){
 
 void op1c(){
     while(1){
+        system("cls");
         string choice;
         cout << "1. Works with 2 Arrays.\n";
         cout << "2. Go back to POINTER MENU.\n";
@@ -487,16 +487,12 @@ void op1c(){
             int** matrix = generateMatrix2(array1,array2,size1, size2, mrow, mcol);
             cout << "d. Generated Matrix from Array1 & Array2: \n";
             printMatrix(matrix,mrow,mcol);
-
-            delete[] array1, array2, cArray, mArray;
-            for (int i = 0; i < mrow; i++)
-                delete[] matrix[i];
-            delete[] matrix;
         }
         else if (choice == "2")
             break;
         else
             cout << "Invalid choice.\n";
+        system("pause");
     }   
 }
 
@@ -536,8 +532,10 @@ void op1d(){
         cout << "Multiple matrix1 and matrix2: \n";
         int** mulMatrix;
         int mlength, mwidth;
-        multiple2Matrices(mulMatrix,matrix1, matrix2,mlength, mwidth, length1, width1, length1, width1);
-        printMatrix(mulMatrix,mlength,mwidth);
+        if(multiple2Matrices(mulMatrix,matrix1, matrix2,mlength, mwidth, length1, width1, length1, width1))
+            printMatrix(mulMatrix,mlength,mwidth);
+        else
+            cout << "Can not multiple 2 matrices.\n";
         cout << "---------------------------------------\n";
         cout << "The submatrix of the muilpled matrix above: \n";
         cout << "Enter the number of column and row of the submatrix: ";
@@ -624,9 +622,55 @@ void op2d(){
 
 
 int main(){
-    system("cls");
+    
     while(1){
         system("cls");
+        string choice1;
+        cout << "****************************************************************\n";
+        cout << "*                              WEEK1                           *\n";
+        cout << "****************************************************************\n";
+        cout << "============================== MENU ============================\n";
+        cout << "1. POINTER MENU.\n";
+        cout << "2. RECURSION MENU.\n";
+        cout << "3. EXIT PROGRAM.\n";
+        cout << "============================== END ============================\n";
+        cout << "Your choice: ";
+        cin >> choice1;
+        if (choice1 == "1"){
+            string choice2;
+            while(1){
+                system("cls");
+                cout << "========================== POINTERS MENU =======================\n";
+                cout << "a. Works with 2 pointers.\n";
+                cout << "b. Works with 1 arrays.\n";
+                cout << "c. Works with 2 arrays.\n";
+                cout << "d. Works with matrix.\n";
+                cout << "0. Go back to Main Menu.\n";
+                cout << "============================== END ============================\n";
+                cout << "Your choice: ";
+                cin >> choice2;
+                if (choice2 == "a")
+                    op1a();
+                else if (choice2 == "b")
+                    op1b();
+                else if (choice2 == "c")
+                    op1c();
+                else if (choice2 == "d")
+                    op1d();
+                else if (choice2 == "0")
+                    break;
+                else
+                    cout << "Invalid choice.\n";
+                system("pause");
+            }
+        }
+        else if (choice1 == "2"){
+
+        }
+        else if (choice1 == "3")
+            exit(0);
+        else
+            cout << "Invalid choice.\n";
         system("pause");
     }
    
