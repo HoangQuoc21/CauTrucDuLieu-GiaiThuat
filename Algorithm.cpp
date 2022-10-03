@@ -33,7 +33,7 @@ int BinarySearch(int a[], int n, int x){
     int left = 0, right = n - 1;
     int mid;
     while (left < right){
-        mid == (left + right)/2;
+        mid = (left + right)/2;
         if (a[mid] == x)
             return mid;
         else{
