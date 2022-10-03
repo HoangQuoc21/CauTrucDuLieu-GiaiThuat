@@ -577,6 +577,7 @@ void op2a(){
     cin >> number2;
     system ("cls");
     cout << "Number1 = " << number1 << ", Number2 = " << number2 << endl;
+    cout << "---------------------------------------\n";
     cout << "a. S = 1 + 2 + 3 + ... + number1 = " << sumRecursive(number1) << endl;
     cout << "b. number1! = 1*2*3*...*number1 = " << factorial(number1) << endl;
     cout << "Enter x: ";
@@ -593,6 +594,7 @@ void op2b(){
     cin >> number;
     system("cls");
     cout << "Entered number: " << number << endl;
+    cout << "---------------------------------------\n";
     cout << "a. The number if digits of it: " << countNumberOfDigits(number) << endl;
     if (isAllDigitsEven(number))
         cout << "b. Every digits of it are even.\n";
@@ -605,18 +607,20 @@ void op2c(){
     int i;
     cout << "Enter the ith number of Fibonacci that you want to find: ";
     cin >> i;
+    cout << "---------------------------------------\n";
     cout << "The " << i << " number of Fibonacci is: " << fibonacciNumber(i) << endl;
 }
 
 void op2d(){
     char charArray[4];
     for (int i = 0; i < 4; i++){
-        cout << "Nhap vao chu cai " << i + 1 <<": ";
+        cout << "Enter the letter: " << i + 1 <<": ";
         cin >> charArray[i];
     }
     char result[100] = {0};
     char used[100] = {0};
-    cout << "Tat ca hoan vi co the xay ra tu 4 chu cai tren la: \n";
+    cout << "---------------------------------------\n";
+    cout << "All possible permutation can happen with 4 letters above are : \n";
     allPossiblePermutation(0,4,charArray,result,used);
 }
 
@@ -665,7 +669,33 @@ int main(){
             }
         }
         else if (choice1 == "2"){
+            string choice2;
+            while(1){
+                system("cls");
+                cout << "=========================== RECURSION =========================\n";
+                cout << "a. Works with 2 little integer.\n";
+                cout << "b. Works with 1 big integer.\n";
+                cout << "c. Find ith number of Fibonacci.\n";
+                cout << "d. Find all possible permutation can happen with 4 letters.\n";
+                cout << "0. Go back to Main Menu.\n";
+                cout << "============================== END ============================\n";
+                cout << "Your choice: ";
+                cin >> choice2;
+                if (choice2 == "a")
+                    op2a();
+                else if (choice2 == "b")
+                    op2b();
+                else if (choice2 == "c")
+                    op2c();
+                else if (choice2 == "d")
+                    op2d();
+                else if (choice2 == "0")
+                    break;
+                else
+                    cout << "Invalid choice.\n";
+                system("pause");
 
+            }
         }
         else if (choice1 == "3")
             exit(0);
@@ -673,6 +703,5 @@ int main(){
             cout << "Invalid choice.\n";
         system("pause");
     }
-   
     return 0;
 }
