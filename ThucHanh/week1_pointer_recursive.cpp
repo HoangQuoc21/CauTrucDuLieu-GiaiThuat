@@ -268,7 +268,7 @@ int RecursiveBinarySearch(int* a, int left, int right, int key){
     int mid = (left + right)/2;
     if (a[mid] == key)
         return mid;
-    else if (mid == right)
+    else if (mid >= right || key > a[right-1])
         return -1;
     else if (key < a[mid])
         return RecursiveBinarySearch(a, left, mid - 1 , key);
@@ -376,34 +376,19 @@ void allPossiblePermutation(int i ,int n, char charArray[], char result[], char 
 //==================MENU FUNCTIONS===================
 
 void op1a(){
-    while(1){
-        system("cls");
-        string choice;
-        cout << "1. Work with 2 numbers.\n";
-        cout << "2. Go back to POINTER MENU.\n";
-        cout << "---------------------------------\n";
-        cout << "Your choice: ";
-        cin >> choice;
-        if (choice == "1"){
-            int number1, number2; 
-            cout << "Please enter Number1's value: ";
-            cin >> number1;
-            cout << "Please enter Number2's value: ";
-            cin >> number2;
-            cout << "Number1= " << number1 << ", Number2= " << number2 << endl;
-            int *a = &number1;
-            int *b = &number2;
-            int *Sum = sum(a,b);
-            cout << number1 << " + " << number2 << "= " << *Sum << endl;
-            swap(a,b);
-            cout << "After swapping. Number1 =  " << number1 << ", Number2 = " << number2 << endl;  
-        }
-        else if (choice == "2")
-            break;
-        else 
-            cout << "Invalid choice.\n";
-        system("pause");
-    }
+    int number1, number2; 
+    cout << "Please enter Number1's value: ";
+    cin >> number1;
+    cout << "Please enter Number2's value: ";
+    cin >> number2;
+    system("cls");
+    cout << "Number1= " << number1 << ", Number2= " << number2 << endl;
+    int *a = &number1;
+    int *b = &number2;
+    int *Sum = sum(a,b);
+    cout << number1 << " + " << number2 << "= " << *Sum << endl;
+    swap(a,b);
+    cout << "After swapping. Number1 =  " << number1 << ", Number2 = " << number2 << endl;  
 }
 
 void op1b(){
@@ -425,19 +410,19 @@ void op1b(){
         printArray(subArray,subArraySize);
         cout << "---------------------------------------\n";
         string choice;
-        cout << "3.Enter \"F\" if you want to find a value in the Array. \"E\" if you want to go back to POINTER MENU.\n" << endl;
+        cout << "3.Enter \"f\" if you want to find a value in the Array. \"e\" if you want to go back to POINTER MENU.\n";
         cout << "Your choice: ";
         cin >> choice;
-        if (choice == "F"){
+        if (choice == "f"){
             int value;
             cout << "Enter the value you want to find: ";
             cin >> value;
-            cout << "-LinearSearch: a[" << LinearSearch(array,size,value) << "].\n";
-            cout << "-SentinelLinearSearch: a[" << SentinelLinearSearch(array,size,value) << "].\n";
-            cout << "-BinarySearch: a[" << BinarySearch(array,size,value) << "].\n";
-            cout << "-RecursiveBinarySearch: a[" << RecursiveBinarySearch(array,0,size,value) << "].\n";
+            cout << "-LinearSearch: " << LinearSearch(array,size,value) << endl;
+            cout << "-SentinelLinearSearch: " << SentinelLinearSearch(array,size,value) << endl;
+            cout << "-BinarySearch: " << BinarySearch(array,size,value) << endl;
+            cout << "-RecursiveBinarySearch: " << RecursiveBinarySearch(array,0,size,value) << endl;
         }  
-        else if (choice == "E")
+        else if (choice == "e")
             break;
         else 
             cout << "Invalid choice.\n";
@@ -446,54 +431,39 @@ void op1b(){
 }
 
 void op1c(){
-    while(1){
-        system("cls");
-        string choice;
-        cout << "1. Works with 2 Arrays.\n";
-        cout << "2. Go back to POINTER MENU.\n";
-        cout << "-------------------------------\n";
-        cout << "Your choice: ";
-        cin >> choice;
-        if (choice == "1"){
-            int size1, size2;
-            cout << "Please enter size of Array1 & Array2: ";
-            cin >> size1 >> size2;
-            int* array1 = new int[size1];
-            int* array2 = new int[size2];
-            cout << "Please inpur Array1: ";
-            inputArray(array1, size1);
-            cout << "Please inpur Array2: ";
-            inputArray(array2, size2);
-            cout << "-------------------------------\n";
-            cout << "Array1: ";
-            printArray(array1, size1);
-            cout << "Array2: ";
-            printArray(array2, size2);
-            swapArrays(array1, array2,size1,size2);
-            cout << "a. After swap: \n";
-            cout << "Array1: ";
-            printArray(array1, size1);
-            cout << "Array2: ";
-            printArray(array2, size2);
-            int nC;
-            int* cArray = concatenate2Arrays(array1, array2,size1, size2, nC);
-            cout << "b. Concatenated array: ";
-            printArray(cArray, nC);
-            int nM;
-            cout << "c. Merged array: ";
-            int *mArray = merge2Arrays(array1,array2,size1,size2,nM);
-            printArray(mArray, nM);
-            int mrow, mcol;
-            int** matrix = generateMatrix2(array1,array2,size1, size2, mrow, mcol);
-            cout << "d. Generated Matrix from Array1 & Array2: \n";
-            printMatrix(matrix,mrow,mcol);
-        }
-        else if (choice == "2")
-            break;
-        else
-            cout << "Invalid choice.\n";
-        system("pause");
-    }   
+    int size1, size2;
+    cout << "Please enter size of Array1 & Array2: ";
+    cin >> size1 >> size2;
+    int* array1 = new int[size1];
+    int* array2 = new int[size2];
+    cout << "Please inpur Array1: \n";
+    inputArray(array1, size1);
+    cout << "Please inpur Array2: \n";
+    inputArray(array2, size2);
+    system("cls");
+    cout << "Array1: ";
+    printArray(array1, size1);
+    cout << "Array2: ";
+    printArray(array2, size2);
+    cout << "=======================================\n";
+    swapArrays(array1, array2,size1,size2);
+    cout << "a. After swap: \n";
+    cout << "Array1: ";
+    printArray(array1, size1);
+    cout << "Array2: ";
+    printArray(array2, size2);
+    int nC;
+    int* cArray = concatenate2Arrays(array1, array2,size1, size2, nC);
+    cout << "b. Concatenated array: ";
+    printArray(cArray, nC);
+    int nM;
+    cout << "c. Merged array: ";
+    int *mArray = merge2Arrays(array1,array2,size1,size2,nM);
+    printArray(mArray, nM);
+    int mrow, mcol;
+    int** matrix = generateMatrix2(array1,array2,size1, size2, mrow, mcol);
+    cout << "d. Generated Matrix from Array1 & Array2: \n";
+    printMatrix(matrix,mrow,mcol); 
 }
 
 void op1d(){
@@ -501,7 +471,7 @@ void op1d(){
     cout << "Enter the length and width of the matrix1 and matrix2: ";
     cin >> length1 >> width1;
     int **matrix1;
-    int ** Tmaxtrix1;
+    int ** Tmatrix1;
     cout << "Enter matrix1: \n";
     generateMatrix1(matrix1,length1, width1);
     system("cls");
@@ -517,9 +487,9 @@ void op1d(){
         cout << "Inputed matrix2: \n";
         printMatrix(matrix2,length1, width1);
         cout << "---------------------------------------\n";
-        Tmaxtrix1 = transposeMatrix(matrix1,length1,width1);
-        cout << "Transpose maxtrix: \n";
-        printMatrix(Tmaxtrix1,width1,length1);
+        Tmatrix1 = transposeMatrix(matrix1,length1,width1);
+        cout << "Transpose maxtrix1: \n";
+        printMatrix(Tmatrix1,width1,length1);
         cout << "---------------------------------------\n";
         cout << "Concatenated2MatricedsH: \n";
         int **Hmatrix = concatenate2MatricesH (matrix1, matrix2,length1, width1,lres1,wres1);
@@ -529,26 +499,27 @@ void op1d(){
         int **Vmatrix = concatenate2MatricesV(matrix1, matrix2,length1, width1, lres2, wres2);
         printMatrix(Vmatrix, lres2, wres2);
         cout << "---------------------------------------\n";
-        cout << "Multiple matrix1 and matrix2: \n";
+        cout << "Multiple matrix1 and Tmatrix1: \n";
         int** mulMatrix;
         int mlength, mwidth;
-        if(multiple2Matrices(mulMatrix,matrix1, matrix2,mlength, mwidth, length1, width1, length1, width1))
+        if(multiple2Matrices(mulMatrix,matrix1, Tmatrix1,mlength, mwidth, length1, width1, width1, length1))
             printMatrix(mulMatrix,mlength,mwidth);
         else
             cout << "Can not multiple 2 matrices.\n";
         cout << "---------------------------------------\n";
-        cout << "The submatrix of the muilpled matrix above: \n";
         cout << "Enter the number of column and row of the submatrix: ";
         cin >> lres3 >> wres3;
+        cout << "The submatrix of the muilpled matrix above: \n";
         int** subMatrix = findSubmatrix(mulMatrix,mlength, mwidth, lres3, wres3);
         printMatrix(subMatrix,lres3, wres3);
-        cout << "=======================================\n";
+        cout << "=============== MATRIX MENU ===========\n";
         cout << "1. Swap 2 columns of matrix1.\n";
         cout << "2. Swap 2 rows of matrix1.\n";
         cout << "3. Go back to POINTER MENU.\n";
-        cout << "---------------------------------------\n";
+        cout << "================== END ================\n";
         cout << "Your choice: ";
         cin >> choice;
+        cout << "---------------------------------------\n";
         if (choice == "1"){
             int col1, col2;
             cout << "Enter the two columns that you want to swap: ";
@@ -577,15 +548,15 @@ void op2a(){
     cin >> number2;
     system ("cls");
     cout << "Number1 = " << number1 << ", Number2 = " << number2 << endl;
-    cout << "---------------------------------------\n";
-    cout << "a. S = 1 + 2 + 3 + ... + number1 = " << sumRecursive(number1) << endl;
-    cout << "b. number1! = 1*2*3*...*number1 = " << factorial(number1) << endl;
+    cout << "=======================================\n";
+    cout << "a. 1 + 2 + 3 + ... + " << number1 << "= " << sumRecursive(number1) << endl;
+    cout << "b. 1 * 2 * 3* ... * " << number1 << "= " << factorial(number1) << endl;
     cout << "Enter x: ";
     cin >> x;
-    cout << "c. x^(number1) = " << exponentiation(x,number1) << endl;
-    cout << "d. The Greatest Common Divisor of number1 & number2 is: " << greatestCommonDivisor(number1, number2) << endl;
-    cout << "e. The Least Common Multiple of number1 & number2 is: " << leastCommonMultiple(number1,number2) << endl;
-    cout << "f. The number of common divisors of number1 & number2 is: " << countNumberOfCommonDivisor(number1, number2) << endl;
+    cout << "c. " << x << " ^ " << number1 << "= " << exponentiation(x,number1) << endl;
+    cout << "d. The Greatest Common Divisor of " << number1 << " & " << number2 << " is: " << greatestCommonDivisor(number1, number2) << endl;
+    cout << "e. The Least Common Multiple of " << number1 << " & " << number2 << " is: " << leastCommonMultiple(number1,number2) << endl;
+    cout << "f. The number of common divisors of " << number1 << " & " << number2 << " is: " << countNumberOfCommonDivisor(number1, number2) << endl;
 }
 
 void op2b(){
@@ -594,24 +565,26 @@ void op2b(){
     cin >> number;
     system("cls");
     cout << "Entered number: " << number << endl;
-    cout << "---------------------------------------\n";
-    cout << "a. The number if digits of it: " << countNumberOfDigits(number) << endl;
+    cout << "=======================================\n";
+    cout << "a. The number if digits of " << number << " is: " << countNumberOfDigits(number) << endl;
     if (isAllDigitsEven(number))
-        cout << "b. Every digits of it are even.\n";
+        cout << "b. Every digits of " << number << " are even.\n";
     else
-        cout << "c. Every digit of it are not even.\n";
-    cout << "d. The reserved value of it is: " << reverseValue(number) << endl;
+        cout << "b. Every digits of " << number << " are not even.\n";
+    cout << "c. The reserved value of " << number << " is: " << reverseValue(number) << endl;
 }
 
 void op2c(){
+    system("cls");
     int i;
     cout << "Enter the ith number of Fibonacci that you want to find: ";
     cin >> i;
-    cout << "---------------------------------------\n";
+    cout << "=======================================\n";
     cout << "The " << i << " number of Fibonacci is: " << fibonacciNumber(i) << endl;
 }
 
 void op2d(){
+    system("cls");
     char charArray[4];
     for (int i = 0; i < 4; i++){
         cout << "Enter the letter: " << i + 1 <<": ";
@@ -619,21 +592,21 @@ void op2d(){
     }
     char result[100] = {0};
     char used[100] = {0};
-    cout << "---------------------------------------\n";
-    cout << "All possible permutation can happen with 4 letters above are : \n";
+    cout << "=======================================\n";
+    cout << "All possible permutation can happen with " << charArray[0] << ", " << charArray[1] << ", " << charArray[2] << ", " << charArray[3] << " are : \n";
     allPossiblePermutation(0,4,charArray,result,used);
+    cout << endl;
 }
 
 
 int main(){
-    
     while(1){
         system("cls");
         string choice1;
         cout << "****************************************************************\n";
         cout << "*                              WEEK1                           *\n";
         cout << "****************************************************************\n";
-        cout << "============================== MENU ============================\n";
+        cout << "=========================== MAIN MENU =========================\n";
         cout << "1. POINTER MENU.\n";
         cout << "2. RECURSION MENU.\n";
         cout << "3. EXIT PROGRAM.\n";
@@ -672,7 +645,7 @@ int main(){
             string choice2;
             while(1){
                 system("cls");
-                cout << "=========================== RECURSION =========================\n";
+                cout << "========================= RECURSION MENU ======================\n";
                 cout << "a. Works with 2 little integer.\n";
                 cout << "b. Works with 1 big integer.\n";
                 cout << "c. Find ith number of Fibonacci.\n";
@@ -694,7 +667,6 @@ int main(){
                 else
                     cout << "Invalid choice.\n";
                 system("pause");
-
             }
         }
         else if (choice1 == "3")
