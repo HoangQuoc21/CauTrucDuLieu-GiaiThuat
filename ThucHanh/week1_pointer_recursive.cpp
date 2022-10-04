@@ -3,7 +3,6 @@
 #include <cmath>
 using namespace std;
 //I. POINTERS
-//1. With 2 interger;
 void swap(int*a, int *b){
     int temp = *a;
     *a = *b;
@@ -16,7 +15,6 @@ int* sum(int* a, int* b){
     return sum;
 }
 
-//2. With 1 1D Arrays
 void inputArray(int* &a, int &n){
     for (int i=0; i<n; i++){
         cout << "a[" << i << "] = ";
@@ -63,8 +61,6 @@ int* findLongestAscendingSubarray(int* a, int n, int& length){
     return indexOfSubArray;
 }
 
-//3. With 2 1D Arrays
-
 void swapArrays(int* &a, int* &b, int &na, int &nb){
     int temp = na;
     na = nb;
@@ -95,8 +91,6 @@ int* merge2Arrays(int*a , int*b, int na, int nb, int &nc){
     }
     return c;
 }
-
-//4. With 1 Matrix
 
 void printMatrix(int** a, int length, int width){
     for (int i = 0; i < length; i++){
@@ -149,7 +143,7 @@ int** transposeMatrix(int** a, int length, int width){
             t[i][j] = a[j][i];
     return t;
 }
-//Theo chiều ngang
+
 int** concatenate2MatricesH(int** a, int** b, int length, int width, int &lres, int &wres){
     lres = length;
     wres = width*2;
@@ -165,7 +159,6 @@ int** concatenate2MatricesH(int** a, int** b, int length, int width, int &lres, 
     return newMa;
 }
 
-//Theo chiều dọc
 int** concatenate2MatricesV(int** a, int** b, int length, int width, int &lres, int &wres){
     lres = length*2;
     wres = width;
@@ -277,7 +270,6 @@ int RecursiveBinarySearch(int* a, int left, int right, int key){
 }
 
 //II. RECURSION
-//1. With 1 little interger
 int sumRecursive(int n){
     if (n==0)
         return 0;
@@ -296,7 +288,6 @@ int exponentiation(int x, int n){
     return (x*exponentiation(x,n-1));
 }
 
-//2. With 1 big interger
 int countNumberOfDigits(int n){
     if (n < 10)
         return 1;
@@ -319,7 +310,6 @@ int reverseValue(int number){
     }
 }
 
-//3. With 2 interger
 int greatestCommonDivisor(int number1, int number2){
     if(number2 == 0)
         return number1;
@@ -339,16 +329,11 @@ int countNumberOfCommonDivisor(int number1, int number2){
     return (((number1 % i == 0)&&(number2 % i == 0)) + countNumberOfCommonDivisor(number1,number2)); 
 }
 
-//4. Fibonacci 
-
-
 int fibonacciNumber(int n){
     if (n == 0 || n == 1)
         return 1;
     return (fibonacciNumber(n-1) + fibonacciNumber(n-2));
 }
-
-//5. With 4 characters
 
 //Hàm in kết quả của những hoán vị tìm được
 void printResult(int n, char result[]){
@@ -357,7 +342,6 @@ void printResult(int n, char result[]){
     cout << ", ";
 }
 
-//Hàm này dùng đệ quy quay lui
 void allPossiblePermutation(int i ,int n, char charArray[], char result[], char used[]){
     for (int j = 0; j < n;j++){
         if(used[j] == 0){
@@ -372,9 +356,7 @@ void allPossiblePermutation(int i ,int n, char charArray[], char result[], char 
     }
 }
 
-//III. My Functions
 //==================MENU FUNCTIONS===================
-
 void op1a(){
     int number1, number2; 
     cout << "Please enter Number1's value: ";
@@ -597,7 +579,6 @@ void op2d(){
     allPossiblePermutation(0,4,charArray,result,used);
     cout << endl;
 }
-
 
 int main(){
     while(1){
