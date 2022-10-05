@@ -365,6 +365,7 @@ void op1a(){
     cin >> number2;
     system("cls");
     cout << "Number1= " << number1 << ", Number2= " << number2 << endl;
+    cout << "=======================================\n";
     int *a = &number1;
     int *b = &number2;
     int *Sum = sum(a,b);
