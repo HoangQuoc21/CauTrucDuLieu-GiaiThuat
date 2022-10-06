@@ -113,8 +113,7 @@ void generateMatrix1(int** &a, int &length, int &width){
 }
 
 int** generateMatrix2(int* a, int* b, int na, int nb, int &crow, int &ccol){
-    crow = na;
-    ccol = nb;
+    crow = na;  ccol = nb;
     int** c = new int*[crow];
     for (int i = 0; i < crow; i++)
         c[i] = new int [ccol];
@@ -145,8 +144,7 @@ int** transposeMatrix(int** a, int length, int width){
 }
 
 int** concatenate2MatricesH(int** a, int** b, int length, int width, int &lres, int &wres){
-    lres = length;
-    wres = width*2;
+    lres = length;  wres = width*2;
     int** newMa = new int*[lres];
     for (int i = 0; i < lres; i++)
         newMa[i] = new int [wres];
@@ -160,8 +158,7 @@ int** concatenate2MatricesH(int** a, int** b, int length, int width, int &lres, 
 }
 
 int** concatenate2MatricesV(int** a, int** b, int length, int width, int &lres, int &wres){
-    lres = length*2;
-    wres = width;
+    lres = length*2;  wres = width;
     int** newMa = new int*[lres];
     for (int i = 0; i < lres; i++)
         newMa[i] = new int [wres];
@@ -258,15 +255,16 @@ int BinarySearch(int* a, int n, int key){
 }
 
 int RecursiveBinarySearch(int* a, int left, int right, int key){
-    int mid = (left + right)/2;
-    if (a[mid] == key)
-        return mid;
-    else if (mid >= right || key > a[right-1])
-        return -1;
-    else if (key < a[mid])
-        return RecursiveBinarySearch(a, left, mid - 1 , key);
-    else if (key > a[mid])
-        return RecursiveBinarySearch(a, mid + 1, right, key);
+    if (right >= left){
+        int mid = left + (right - left)/2;
+        if (a[mid] == key)
+            return mid;
+        else if (a[mid] > key)
+            return RecursiveBinarySearch(a,left, mid-1,key);
+        else
+            return RecursiveBinarySearch(a,mid+1,right,key);
+    }
+    return -1; 
 }
 
 //II. RECURSION
@@ -397,13 +395,16 @@ void op1b(){
         cout << "Your choice: ";
         cin >> choice;
         if (choice == "f"){
+            cout << "---------------------------------------\n";
             int value;
             cout << "Enter the value you want to find: ";
             cin >> value;
+            cout << "---------------------------------------\n";
+            cout << "Here are the indexs of " << value << " found by using searching algorithms (-1 means can't find): \n";
             cout << "-LinearSearch: " << LinearSearch(array,size,value) << endl;
             cout << "-SentinelLinearSearch: " << SentinelLinearSearch(array,size,value) << endl;
             cout << "-BinarySearch: " << BinarySearch(array,size,value) << endl;
-            cout << "-RecursiveBinarySearch: " << RecursiveBinarySearch(array,0,size,value) << endl;
+            cout << "-RecursiveBinarySearch: " << RecursiveBinarySearch(array,0,size-1,value) << endl;
         }  
         else if (choice == "e")
             break;
@@ -415,8 +416,10 @@ void op1b(){
 
 void op1c(){
     int size1, size2;
-    cout << "Please enter size of Array1 & Array2: ";
-    cin >> size1 >> size2;
+    cout << "Please enter size of Array1: ";
+    cin >> size1;
+    cout << "Please enter size of Array2: ";
+    cin >> size2;
     int* array1 = new int[size1];
     int* array2 = new int[size2];
     cout << "Please inpur Array1: \n";
@@ -451,8 +454,10 @@ void op1c(){
 
 void op1d(){
     int length1, width1;
-    cout << "Enter the length and width of the matrix1 and matrix2: ";
-    cin >> length1 >> width1;
+    cout << "Enter the length of matrix1 and matrix2: ";
+    cin >> length1;
+    cout << "Enter the width of matrix1 and matrix2: ";
+    cin >> width1;
     int **matrix1;
     int ** Tmatrix1;
     cout << "Enter matrix1: \n";
@@ -490,8 +495,10 @@ void op1d(){
         else
             cout << "Can not multiple 2 matrices.\n";
         cout << "---------------------------------------\n";
-        cout << "Enter the number of column and row of the submatrix: ";
-        cin >> lres3 >> wres3;
+        cout << "Enter the number of column of the submatrix you want to find: ";
+        cin >> lres3;
+        cout << "Enter the number of width of the submatrix you want to find: ";
+        cin >> wres3;
         cout << "The submatrix of the muilpled matrix above: \n";
         int** subMatrix = findSubmatrix(mulMatrix,mlength, mwidth, lres3, wres3);
         printMatrix(subMatrix,lres3, wres3);
