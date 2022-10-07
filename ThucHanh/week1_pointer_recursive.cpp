@@ -56,6 +56,7 @@ int* findLongestAscendingSubarray(int* a, int n, int& length){
         if (currentLength > length){
             length = currentLength;
             indexOfSubArray = currentIndex;
+            i = i + length;
         }
     }
     return indexOfSubArray;
@@ -595,7 +596,7 @@ int main(){
         cout << "****************************************************************\n";
         cout << "*                              WEEK1                           *\n";
         cout << "****************************************************************\n";
-        cout << "=========================== MAIN MENU =========================\n";
+        cout << "============================ MAIN MENU =========================\n";
         cout << "1. POINTER MENU.\n";
         cout << "2. RECURSION MENU.\n";
         cout << "3. EXIT PROGRAM.\n";
@@ -608,7 +609,7 @@ int main(){
                 system("cls");
                 cout << "========================== POINTERS MENU =======================\n";
                 cout << "a. Works with 2 pointers.\n";
-                cout << "b. Works with 1 arrays.\n";
+                cout << "b. Works with 1 array.\n";
                 cout << "c. Works with 2 arrays.\n";
                 cout << "d. Works with matrix.\n";
                 cout << "0. Go back to Main Menu.\n";
@@ -635,7 +636,7 @@ int main(){
             while(1){
                 system("cls");
                 cout << "========================= RECURSION MENU ======================\n";
-                cout << "a. Works with 2 little integer.\n";
+                cout << "a. Works with 2 little integers.\n";
                 cout << "b. Works with 1 big integer.\n";
                 cout << "c. Find ith number of Fibonacci.\n";
                 cout << "d. Find all possible permutation can happen with 4 letters.\n";
