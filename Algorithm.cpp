@@ -16,7 +16,7 @@ int LinearSearch1(int a[], int n, int x){
         return i;
 }
 
-//* TÌM KIẾM TUYẾN TÍNH CÓ LÍNH CANH ( GIÚP GIẢM BỚT 1 PHÉP SO SÁNH): O(n-1)
+//* TÌM KIẾM TUYẾN TÍNH CÓ LÍNH CANH ( GIÚP GIẢM BỚT 1 PHÉP SO SÁNH TRONG MỖI VÒNG LẶP): O(n-1)
 int LinearSearch2 (int a[], int n, int x){
     int i = 0;
     a[n] = x;

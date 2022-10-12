@@ -212,8 +212,6 @@ void checkPositive(int &number){
 }
  
 int main() {
-    
-
     Dlist list;
     initList(list);
     string choice;

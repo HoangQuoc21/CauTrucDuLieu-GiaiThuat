@@ -30,7 +30,7 @@ void initQueue(Queue &queue){
     queue.pTail = NULL;
 }
 
-//Kiểm tra hàng đợi rỗng/ đầy
+//Kiểm tra hàng đợi rỗng
 bool isEmpty (Queue queue){
     if (queue.pHead == NULL)
         return true;
