@@ -295,6 +295,10 @@ void removeDuplicate(List* &L){
 }
 
 bool removeElement(List* &L, int key){
+    if (countVal(L, key) == 1 && countElements(L) == 1){
+        removeHead(L);
+        return true;
+    }
     if(!isEmpty(L) && (countVal(L, key) != 0)){
         DNODE* tempNode = L->pHead;
         while(tempNode && tempNode->pNext && tempNode->pNext->pNext){
@@ -661,11 +665,7 @@ void singlyLinkedList(){
             if(countVal(list, val) == 0)
                 cout << "Khong ton tai Node mang gia tri nay trong DSLK.\n";
             else{
-                if (countVal(list, val) == 1 && countElements(list) == 1){
-                    removeHead(list);
-                    cout << "Da xoa thanh cong nhung Node co gia tri " << val << " khoi DSLK.\n";
-                }
-                else if (removeElement(list, val))
+                if (removeElement(list, val))
                     cout << "Da xoa thanh cong nhung Node co gia tri " << val << " khoi DSLK.\n";
                 else
                     cout << "Da khong thanh cong xoa nhung Node co gia tri " << val << " khoi DSLK.\n";
