@@ -1,9 +1,10 @@
 #include <iostream>
 using namespace std;
-//I. SINGLY LINKED LIST
+//IV. DOUBLY LINKED LIST
 struct DNODE {
     int key;
     DNODE* pNext;
+    DNODE* pPrev;
 };
 
 struct List {
@@ -20,6 +21,7 @@ DNODE* createNode(int data){
     if (newNode){
         newNode->key = data;
         newNode->pNext = NULL;
+        newNode->pPrev = NULL;
         return newNode;
     }
     return NULL;
@@ -40,6 +42,7 @@ bool addHead(List* &L, int data){
         if (isEmpty(L))
             L->pHead = L->pTail = newNode;
         else{
+            L->pHead->pPrev = newNode;
             newNode->pNext = L->pHead;
             L->pHead = newNode;
         }
@@ -54,6 +57,7 @@ bool addTail(List* &L, int data){
         if (isEmpty(L))
             L->pHead = L->pTail = newNode;
         else{
+            newNode->pPrev = L->pTail;
             L->pTail->pNext = newNode;
             L->pTail = newNode;
         }
@@ -68,6 +72,7 @@ void removeHead(List* &L){
         L->pHead = L->pTail = NULL;
     else{
         L->pHead = L->pHead->pNext;
+        L->pHead->pPrev = NULL;
     }
     delete deleteNode;
 }
@@ -77,11 +82,8 @@ void removeTail(List* &L){
     if(L->pHead == L->pTail)
         L->pHead = L->pTail = NULL;
     else{
-        DNODE* tempNode = L->pHead;
-        while(tempNode->pNext != deleteNode)
-            tempNode = tempNode->pNext;
-        tempNode->pNext = NULL;
-        L->pTail = tempNode;
+        L->pTail = L->pTail->pPrev;
+        L->pTail->pNext = NULL;
     }
     delete deleteNode;
 }
@@ -108,6 +110,44 @@ int countVal(List *L, int val){
     return count;
 }
 
+void removeBefore(List* L, int val){
+    if(!isEmpty(L)){
+        if (L->pHead->pNext->key == val)
+            removeHead(L);
+        DNODE* tempNode = L->pHead;
+        while(tempNode && tempNode->pNext && tempNode->pNext->pNext){
+            //tempNode -> deleteNode -> valNode
+            if (tempNode->pNext->pNext->key == val){
+                DNODE* deleteNode = tempNode->pNext;
+                DNODE* valNode = deleteNode->pNext;
+                tempNode->pNext = valNode;
+                valNode->pPrev = tempNode;
+                delete deleteNode;
+            }
+            tempNode = tempNode->pNext;
+        }
+    }
+}
+
+void removeAfter(List* L, int val){
+    if(!isEmpty(L)){
+        if (L->pTail->pPrev->key == val)
+            removeTail(L);
+        DNODE* tempNode = L->pHead;
+        while(tempNode && tempNode->pNext && tempNode->pNext->pNext){
+            //tempNode -> deleteNode -> nextNode
+            if(tempNode->key == val){
+                DNODE* deleteNode = tempNode->pNext;
+                DNODE* nextNode = deleteNode->pNext;
+                tempNode->pNext = nextNode;
+                nextNode->pPrev = deleteNode;
+                delete deleteNode;
+            }
+            tempNode = tempNode->pNext;
+        }
+    }
+}
+
 int countElements(List* L){
     int count = 0;
     if(!isEmpty(L)){
@@ -118,43 +158,6 @@ int countElements(List* L){
         }
     }
     return count;
-}
-
-void removeBefore(List* L, int val){
-    if(!isEmpty(L)){
-        if (L->pHead->pNext->key == val)
-            removeHead(L);
-        DNODE* tempNode = L->pHead;
-        while(tempNode && tempNode->pNext && tempNode->pNext->pNext){
-            //tempNode -> deleteNode -> valNode
-            if (tempNode->pNext->pNext->key == val){
-                DNODE* deleteNode = tempNode->pNext;
-                tempNode->pNext = tempNode->pNext->pNext;
-                delete deleteNode;
-            }
-            tempNode = tempNode->pNext;
-        }
-        if (countElements(L) == 2 && countVal(L, val) == 2)
-            removeHead(L);
-    }
-}
-
-void removeAfter(List* L, int val){
-    if(!isEmpty(L)){
-        DNODE* tempNode = L->pHead;
-        while(tempNode && tempNode->pNext){
-            if (tempNode->key == val && tempNode->pNext == L->pTail)
-                removeTail(L);
-            //tempNode -> deleteNode
-            else if(tempNode->key == val){
-                DNODE* deleteNode = tempNode->pNext;
-                tempNode->pNext = deleteNode->pNext;
-                delete deleteNode;
-            }
-            else
-                tempNode = tempNode->pNext;
-        }
-    }
 }
 
 //QUY ƯỚC: vị trí (index) trong danh sách liên kết bắt đầu từ 1;
@@ -178,9 +181,13 @@ bool addPos(List* &L, int data, int pos){
             curIndex++;
         }
         DNODE* addNode = createNode(data);
+        DNODE* nextNode = tempNode->pNext;
+        //tempNode -> addNode -> nextNode
         if(addNode){
-            addNode->pNext = tempNode->pNext;
             tempNode->pNext = addNode;
+            addNode->pPrev = tempNode;
+            addNode->pNext = nextNode;
+            nextNode->pPrev = addNode;
             return true;
         }
     }
@@ -200,8 +207,11 @@ void removePos(List* &L, int pos){
             tempNode = tempNode->pNext;
             curIndex++;
         }
+        //tempNode -> deleteNode -> nextNode
         DNODE* deleteNode = tempNode->pNext;
-        tempNode->pNext = deleteNode->pNext;
+        DNODE* nextNode = deleteNode->pNext;
+        tempNode->pNext = nextNode;
+        nextNode->pPrev = tempNode;
         delete deleteNode;
     }
 }
@@ -213,8 +223,11 @@ bool addBefore(List* L, int data, int val){
             //tempNode -> addNode -> valNode
             if(tempNode->pNext->key == val){
                 DNODE* addNode = createNode(data);
-                addNode->pNext = tempNode->pNext;
+                DNODE* valNode = tempNode->pNext;
                 tempNode->pNext = addNode;
+                addNode->pPrev = tempNode;
+                addNode->pNext = valNode;
+                valNode->pPrev = addNode;
                 tempNode = tempNode->pNext->pNext;
             }
             else
@@ -231,11 +244,14 @@ bool addAfter(List* L, int data, int val){
     if(!isEmpty(L) && (countVal(L,val) != 0)){
         DNODE* tempNode = L->pHead;
         while(tempNode){
-            //tempNode -> addNode 
+            //tempNode -> addNode -> nextNode
             if(tempNode->key == val){
                 DNODE* addNode = createNode(data);
-                addNode->pNext = tempNode->pNext;
+                DNODE* nextNode = tempNode->pNext;
                 tempNode->pNext = addNode;
+                addNode->pPrev = tempNode;
+                addNode->pNext = nextNode;
+                nextNode->pPrev = addNode;
                 tempNode = tempNode->pNext->pNext;
             }
             else
@@ -250,45 +266,47 @@ bool addAfter(List* L, int data, int val){
 
 void printList(List* L){
     DNODE* tempNode = L->pHead;
+    cout << "DSLK da nhap in xuoi( -> ): \n";
     while(tempNode){
-        if(tempNode->pNext)
-            cout << tempNode->key << " -> ";
-        else
+        if (tempNode->pNext == NULL)
             cout << tempNode->key;
+        else{
+            cout << tempNode->key << " <-> ";
+        }
         tempNode = tempNode->pNext;
     }
 }
 
 List* reverseList(List* L){
     if(!isEmpty(L)){
+        L->pTail = L->pHead;
+        // prevNode <-> currNode
         DNODE* prevNode = NULL;
         DNODE* currNode = L->pHead;
-        DNODE* nextNode = NULL;
         while(currNode){
-            nextNode = currNode->pNext;
+            prevNode = currNode->pPrev;
+            currNode->pPrev = currNode->pNext;
             currNode->pNext = prevNode;
-            prevNode = currNode;
-            currNode = nextNode;
+            currNode = currNode->pPrev;
         }
-        L->pTail = L->pHead;
-        L->pHead = prevNode;
+        if (prevNode)
+            L->pHead = prevNode->pPrev;
     }
     return L;
 }
 
 void removeDuplicate(List* &L){
-    DNODE* tempNode1 = L->pHead, *tempNode2, *dupNode;
+    DNODE* tempNode1 = L->pHead, *tempNode2;
     while(tempNode1 && tempNode1->pNext){
         tempNode2 = tempNode1;
         while(tempNode2->pNext){
             if(tempNode1->key == tempNode2->pNext->key){
-                if (tempNode2->pNext == L->pTail)
-                    removeTail(L);
-                else{
-                    dupNode = tempNode2->pNext;
-                    tempNode2->pNext = tempNode2->pNext->pNext;
-                    delete dupNode;
-                } 
+                DNODE* dupNode = tempNode2->pNext;
+                DNODE* nextNode = dupNode->pNext;
+                //tempNode2 -> dupNode -> nextNode
+                tempNode2->pNext = nextNode;
+                nextNode->pPrev = tempNode2;
+                delete dupNode;
             }
             else
                 tempNode2 = tempNode2->pNext;
@@ -306,11 +324,15 @@ bool removeElement(List* &L, int key){
         DNODE* tempNode = L->pHead;
         while(tempNode && tempNode->pNext && tempNode->pNext->pNext){
             if (tempNode->pNext->key == key){
+                //tempNode -> deleteNode -> nextNode
                 DNODE* deleteNode = tempNode->pNext;
-                tempNode->pNext = tempNode->pNext->pNext;
+                DNODE* nextNode = deleteNode->pNext;
+                tempNode->pNext = nextNode;
+                nextNode->pPrev = tempNode;
                 delete deleteNode;
             }
-            tempNode = tempNode->pNext;
+            else 
+                tempNode = tempNode->pNext;
         }
         if(L->pHead->key == key)
             removeHead(L);
@@ -321,184 +343,9 @@ bool removeElement(List* &L, int key){
     return false;
 }
 
-//II. STACK
-struct Stack{
-    DNODE* top;
-};
+//================== DLL MENU FUNCTIONS ================
 
-//Khởi tạo stack
-void initStack(Stack &stack, int firstKey){
-    DNODE* firstNode = createNode(firstKey);
-    stack.top = firstNode;
-}
-
-//Kiểm tra stack có rỗng
-bool isSEmpty (Stack stack){
-    if (stack.top == NULL)
-        return true;
-    else
-        return false;
-}
-
-//Push: đẩy 1 phần tử vào stack
-void Push (Stack &stack, int x){
-    DNODE* newNode = createNode(x);
-    if (newNode != NULL){
-        if (isSEmpty(stack) == true)
-            stack.top = newNode;
-        else{
-            newNode->pNext = stack.top;
-            stack.top = newNode; 
-        }
-    }
-}
-
-//Pop: Lấy phần tử từ đỉnh stack
-int Pop(Stack &stack){
-    if (isSEmpty(stack) == true)
-        return 0;
-    else{
-        DNODE* tempNode = stack.top;
-        int data = tempNode->key;
-        stack.top = tempNode->pNext;
-        delete tempNode;
-        return data;
-    }
-}
-
-//Đếm số phần tử trong stack
-int countEStack(Stack stack){
-    DNODE* tempNode = stack.top;
-    int count = 0;
-    while(tempNode){
-        count++;
-        tempNode = tempNode->pNext;
-    } 
-    return count;
-}
-
-//Hủy ngăn xếp
-void deleteStack (Stack &stack){
-    DNODE* tempNode = stack.top;
-    while (stack.top != NULL){
-        stack.top = tempNode->pNext;
-        delete tempNode;
-        tempNode = stack.top;
-    }
-}
-
-//In ngăn xếp
-void printStack(Stack stack){
-    DNODE* tempNode = stack.top;
-    while (tempNode != NULL){
-        if (tempNode->pNext == NULL){
-            cout << "\t\t      | " << tempNode->key <<" |" << endl;
-        }
-        else    
-            cout << "\t\t      | " << tempNode->key <<" |" << endl;
-        tempNode = tempNode->pNext;
-    }
-}
-
-//III. QUEUE
-struct Queue{
-    DNODE* pHead;
-    DNODE* pTail;
-};
-
-//Khởi tạo hàng đợi
-void initQueue(Queue &queue, int firstKey){
-    DNODE* firstNode = createNode(firstKey);
-    queue.pHead = queue.pTail = firstNode;
-}
-
-//Kiểm tra hàng đợi rỗng
-bool isQEmpty (Queue queue){
-    if (queue.pHead == NULL)
-        return true;
-    else
-        return false;
-}
-
-//Đẩy phần tử mới vào hàng đợi (Push)
-//Phần tử mới luôn được thêm vào cuối hàng đợi
-void Enqueue(Queue &queue, int x){
-    DNODE* newNode = createNode(x);
-    if (isQEmpty(queue) == true){
-        queue.pHead = newNode;
-        queue.pTail = newNode;
-    }
-    else{
-        queue.pTail->pNext = newNode;
-        queue.pTail = newNode;
-    }
-}
-
-//Lấy phần tử ở đỉnh hàng đợi ra(Pop)
-int Dequeue(Queue &queue){
-    int x;
-    DNODE* tempNode = NULL;
-    if (isQEmpty(queue) != true){
-        tempNode = queue.pHead;
-        x = tempNode->key;
-        queue.pHead = queue.pHead->pNext;
-        delete tempNode;
-
-        if (queue.pHead == NULL)
-            queue.pTail == NULL;
-    }
-    return x;
-}
-
-//Đếm số phần tử trong stack
-int countEQueue(Queue queue){
-    DNODE* tempNode = queue.pHead;
-    int count = 0;
-    while(tempNode){
-        count++;
-        tempNode = tempNode->pNext;
-    } 
-    return count;
-}
-
-//Hủy hàng đợi
-void deleteQueue(Queue &queue){
-    DNODE* tempNode1;
-    DNODE* tempNode2 = queue.pHead;
-    while (tempNode2){
-        tempNode1 = tempNode2;
-        tempNode2 = tempNode1->pNext;
-        delete tempNode1;
-    }
-    queue.pHead = queue.pTail = NULL;
-}
-
-//In hàng đợi
-void printQueue (Queue queue){
-    DNODE* tempNode1, *tempNode2, *tempNode3;
-    tempNode1 = tempNode2 = tempNode3 = queue.pHead;
-    cout << "\t";
-    while (tempNode1 != NULL){
-        cout << "--";
-        tempNode1 = tempNode1->pNext;
-    }
-    cout << endl;
-    cout << "\t";
-    while (tempNode2 != NULL){
-        cout << tempNode2->key << " ";
-        tempNode2 = tempNode2->pNext;
-    }
-    cout << endl;
-    cout << "\t";
-    while (tempNode3 != NULL){
-        cout << "--";
-        tempNode3 = tempNode3->pNext;
-    }
-    cout << endl;
-}
-
-//================== SLL MENU FUNCTIONS ================
-void singlyLinkedList(){
+int main(){
     system("cls");
     int nNode;
     cout << "Nhap vao so so luong Node cua DSLK: ";
@@ -516,7 +363,7 @@ void singlyLinkedList(){
     while(1){
         string choice;
         system("cls");
-        cout << "==================== SINGLY LINKED LIST =================\n";
+        cout << "==================== DOUBLY LINKED LIST =================\n";
         cout << "So luong Node hien co: " << countElements(list) << endl;
         cout << "DSLK da nhap: ";
         printList(list);
@@ -536,7 +383,7 @@ void singlyLinkedList(){
         cout << "\t2f. Xoa nhung Node co gia tri trung nhau trong DSLK.\n";
         cout << "\t2g. Xoa tat ca Node co gia tri duoc chon trong DSLK.\n";
         cout << "3. Dao nguoc DSLK.\n";
-        cout << "0. Tro lai MAIN MENU.\n";
+        cout << "0. Thoat chuong trinh.\n";
         cout << "========================= END ==========================\n";
         cout << "Lua chon cua ban: ";
         cin >> choice;
@@ -668,7 +515,11 @@ void singlyLinkedList(){
             if(countVal(list, val) == 0)
                 cout << "Khong ton tai Node mang gia tri nay trong DSLK.\n";
             else{
-                if (removeElement(list, val))
+                if (countVal(list, val) == 1 && countElements(list) == 1){
+                    removeHead(list);
+                    cout << "Da xoa thanh cong nhung Node co gia tri " << val << " khoi DSLK.\n";
+                }
+                else if (removeElement(list, val))
                     cout << "Da xoa thanh cong nhung Node co gia tri " << val << " khoi DSLK.\n";
                 else
                     cout << "Da khong thanh cong xoa nhung Node co gia tri " << val << " khoi DSLK.\n";
@@ -681,128 +532,10 @@ void singlyLinkedList(){
         else if (choice == "0"){
             removeAll(list);
             delete list;
-            break;
-        }
-        else
-            cout << "Lua chon khong hop le.\n";
-        system("pause");
-    }
-}
-
-void stack(){
-    system("cls");
-    Stack stack;
-    int firstKey;
-    cout << "Nhap vao gia tri Push vao dau tien cua Stack: ";
-    cin >> firstKey;
-    initStack(stack, firstKey);
-    while (1){
-        string choice;
-        system("cls");
-        cout << "====================== STACK ====================\n";
-        cout << "So luong phan tu trong ngan xep: " << countEStack(stack) << endl;
-        cout << "Ngan xep da nhap: \n";
-        printStack(stack);
-        cout << "=================== STACK MENU ==================\n";
-        cout << "1. Push 1 phan tu vao ngan xep.\n";
-        cout << "2. Pop phan tu o dinh ngan xep ra.\n";
-        cout << "0. Quay tro lai MAIN MENU.\n";
-        cout << "====================== END ======================\n";
-        cout << "Lua chon cua ban: ";
-        cin >> choice;
-        cout << "------------------------------------------------\n";
-        if (choice == "1"){
-            int data;
-            cout << "Nhap vao du lieu phan tu muon Push: ";
-            cin >> data;
-            Push(stack, data);
-            cout << "Da Push phan tu vao ngan xep.\n";
-        }
-        else if (choice == "2"){
-            if (!isSEmpty(stack))
-                cout << "Da Pop phan tu tren dinh ngan xep ra. Phan tu do co gia tri: " << Pop(stack) << endl;
-            else
-                cout << "Ngan xep rong.\n";
-        }
-        else if (choice == "0"){
-            deleteStack(stack);
-            break;
-        }
-        else
-            cout << "Lua chon khong hop le.\n";
-        system("pause");
-    }
-}
-
-void queue(){
-    Queue queue;
-    int firstKey;
-    system("cls");
-    cout << "Nhap vao gia tri Enqueue vao dau tien cua Queue: ";
-    cin >> firstKey;
-    initQueue(queue, firstKey);
-    while (1){
-        string choice;
-        system("cls");
-        cout << "============================= QUEUQE ==========================\n";
-        cout << "So luong phan tu trong hang doi: " << countEQueue(queue) << endl;
-        cout << "Hang doi da nhap: \n";
-        printQueue(queue);
-        cout << "=========================== QUEUE MENU ========================\n";
-        cout << "1. Enqueue (Push) mot phan tu vao hang doi.\n";
-        cout << "2. Dequeue (Pop) phan tu o dau hang doi ra.\n";
-        cout << "0. Quay tro lai MAIN MENU.\n";
-        cout << "=============================== END ============================\n";
-        cout << "Lua chon cua ban: ";
-        cin >> choice;
-        cout << "--------------------------------\n";
-        if (choice == "1"){
-            int data;
-            cout << "Hay nhap vao gia tri cua phann tu muon Push: ";
-            cin >> data;
-            Enqueue(queue,data);
-            cout << "Da Enqueue phan tu len dau hang doi.\n";
-        }
-        else if (choice == "2"){
-            if (!isQEmpty(queue))
-                cout << "Da Dequeue phan tu o dau hang doi ra. Phan tu do co gia tri: "<< Dequeue(queue) << endl;
-            else
-                cout << "Hang doi rong.\n";
-        }
-        else if (choice == "0"){
-            deleteQueue(queue);
-            break;
-        }
-        else 
-            cout << "Lua chon khong hop le.\n";
-        system("pause");
-    }
-}
-
-int main(){
-    while(1){
-        system("cls");
-        string choice;
-        cout << "****************************************************************\n";
-        cout << "*                              WEEK3                           *\n";
-        cout << "****************************************************************\n";
-        cout << "============================ MAIN MENU =========================\n";
-        cout << "1. LINKED LIST MENU.\n";
-        cout << "2. STACK MENU.\n";
-        cout << "3. QUEUE MENU.\n";
-        cout << "0. THOAT THUONG TRINH.\n";
-        cout << "============================== END ============================\n";
-        cout << "Lua chon cua ban: ";
-        cin >> choice;
-        if (choice == "1")
-            singlyLinkedList();
-        else if (choice == "2")
-            stack();
-        else if (choice == "3")
-            queue();
-        else if (choice == "0")
             exit(0);
+        }
         else
             cout << "Lua chon khong hop le.\n";
+        system("pause");
     }
 }
