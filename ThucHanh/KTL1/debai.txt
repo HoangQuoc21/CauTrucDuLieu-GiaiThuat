@@ -1,0 +1,9 @@
+Câu 1 (3 đ). Viết hàm tìm kiếm tuần tự. Trả về vị trí của khóa key cần tìm. Nếu khóa key không tồn tại thì trả về -1
+
+Câu 2 (3 đ). Viết hàm in ra dạng nhị phân của một số nguyên dương. Sử dụng đệ quy.
+
+Cau 3 (4 đ). Đọc ghi file:
+
+Đọc tập tin message.txt, mã hóa nội dung của tập tin này và ghi ra file output.txt.
+
+Chú ý: Hàm mã hóa kí tự CaesarEncode được viết sẵn trong file main.cpp. Sinh viên sử dụng hàm này với tham số key = 5.
