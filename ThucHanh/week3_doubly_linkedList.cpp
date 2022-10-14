@@ -1,23 +1,23 @@
 #include <iostream>
 using namespace std;
 //IV. DOUBLY LINKED LIST
-struct DNODE {
+struct SNODE {
     int key;
-    DNODE* pNext;
-    DNODE* pPrev;
+    SNODE* pNext;
+    SNODE* pPrev;
 };
 
-struct List {
-    DNODE* pHead;
-    DNODE* pTail;
+struct SList {
+    SNODE* pHead;
+    SNODE* pTail;
 };
 
-bool isEmpty(List* L){
+bool isEmpty(SList* L){
     return ((L->pHead == NULL) && (L->pTail == NULL));
 }
 
-DNODE* createNode(int data){
-    DNODE* newNode = new DNODE;
+SNODE* createNode(int data){
+    SNODE* newNode = new SNODE;
     if (newNode){
         newNode->key = data;
         newNode->pNext = NULL;
@@ -27,8 +27,8 @@ DNODE* createNode(int data){
     return NULL;
 }
 
-List* createList(DNODE* pNode){
-    List* newList = new List;
+SList* createList(SNODE* pNode){
+    SList* newList = new SList;
     if (newList && pNode){
         newList->pHead = newList->pTail = pNode;
         return newList;
@@ -36,8 +36,8 @@ List* createList(DNODE* pNode){
     return NULL;
 }
 
-bool addHead(List* &L, int data){
-    DNODE* newNode = createNode(data);
+bool addHead(SList* &L, int data){
+    SNODE* newNode = createNode(data);
     if (newNode){
         if (isEmpty(L))
             L->pHead = L->pTail = newNode;
@@ -51,8 +51,8 @@ bool addHead(List* &L, int data){
     return false;
 }
 
-bool addTail(List* &L, int data){
-    DNODE* newNode = createNode(data);
+bool addTail(SList* &L, int data){
+    SNODE* newNode = createNode(data);
     if (newNode){
         if (isEmpty(L))
             L->pHead = L->pTail = newNode;
@@ -66,8 +66,8 @@ bool addTail(List* &L, int data){
     return false;
 }
 
-void removeHead(List* &L){
-    DNODE* deleteNode = L->pHead;
+void removeHead(SList* &L){
+    SNODE* deleteNode = L->pHead;
     if (L->pHead == L->pTail)
         L->pHead = L->pTail = NULL;
     else{
@@ -77,8 +77,8 @@ void removeHead(List* &L){
     delete deleteNode;
 }
 
-void removeTail(List* &L){
-    DNODE* deleteNode = L->pTail;
+void removeTail(SList* &L){
+    SNODE* deleteNode = L->pTail;
     if(L->pHead == L->pTail)
         L->pHead = L->pTail = NULL;
     else{
@@ -88,9 +88,9 @@ void removeTail(List* &L){
     delete deleteNode;
 }
 
-void removeAll(List* &L){
-    DNODE* tempNode1;
-    DNODE* tempNode2 = L->pHead;
+void removeAll(SList* &L){
+    SNODE* tempNode1;
+    SNODE* tempNode2 = L->pHead;
     while(tempNode2){
         tempNode1 = tempNode2;
         tempNode2 = tempNode2->pNext;
@@ -99,9 +99,9 @@ void removeAll(List* &L){
     L->pHead = L->pTail = NULL;
 }
 
-int countVal(List *L, int val){
+int countVal(SList *L, int val){
     int count = 0;
-    DNODE* tempNode = L->pHead;
+    SNODE* tempNode = L->pHead;
     while(tempNode){
         if(tempNode->key == val)
             count++;
@@ -110,16 +110,16 @@ int countVal(List *L, int val){
     return count;
 }
 
-void removeBefore(List* L, int val){
+void removeBefore(SList* L, int val){
     if(!isEmpty(L)){
         if (L->pHead->pNext->key == val)
             removeHead(L);
-        DNODE* tempNode = L->pHead;
+        SNODE* tempNode = L->pHead;
         while(tempNode && tempNode->pNext && tempNode->pNext->pNext){
             //tempNode -> deleteNode -> valNode
             if (tempNode->pNext->pNext->key == val){
-                DNODE* deleteNode = tempNode->pNext;
-                DNODE* valNode = deleteNode->pNext;
+                SNODE* deleteNode = tempNode->pNext;
+                SNODE* valNode = deleteNode->pNext;
                 tempNode->pNext = valNode;
                 valNode->pPrev = tempNode;
                 delete deleteNode;
@@ -129,16 +129,16 @@ void removeBefore(List* L, int val){
     }
 }
 
-void removeAfter(List* L, int val){
+void removeAfter(SList* L, int val){
     if(!isEmpty(L)){
         if (L->pTail->pPrev->key == val)
             removeTail(L);
-        DNODE* tempNode = L->pHead;
+        SNODE* tempNode = L->pHead;
         while(tempNode && tempNode->pNext && tempNode->pNext->pNext){
             //tempNode -> deleteNode -> nextNode
             if(tempNode->key == val){
-                DNODE* deleteNode = tempNode->pNext;
-                DNODE* nextNode = deleteNode->pNext;
+                SNODE* deleteNode = tempNode->pNext;
+                SNODE* nextNode = deleteNode->pNext;
                 tempNode->pNext = nextNode;
                 nextNode->pPrev = deleteNode;
                 delete deleteNode;
@@ -148,10 +148,10 @@ void removeAfter(List* L, int val){
     }
 }
 
-int countElements(List* L){
+int countElements(SList* L){
     int count = 0;
     if(!isEmpty(L)){
-        DNODE* tempNode = L->pHead;
+        SNODE* tempNode = L->pHead;
         while(tempNode){
             count++;
             tempNode = tempNode->pNext;
@@ -161,13 +161,13 @@ int countElements(List* L){
 }
 
 //QUY ƯỚC: vị trí (index) trong danh sách liên kết bắt đầu từ 1;
-bool checkPos(List* L, int pos){
+bool checkPos(SList* L, int pos){
     if (!isEmpty(L))
         return (pos > 0 && (pos <= countElements(L)));
     return false;
 }
 
-bool addPos(List* &L, int data, int pos){
+bool addPos(SList* &L, int data, int pos){
     if (pos == 1)
         return addHead(L, data);
     else if (pos == countElements(L))
@@ -175,13 +175,13 @@ bool addPos(List* &L, int data, int pos){
     else{
         //thêm Node sau 1 Node
         int curIndex = 1;
-        DNODE* tempNode = L->pHead;
+        SNODE* tempNode = L->pHead;
         while(curIndex < pos -1  ){
             tempNode = tempNode->pNext;
             curIndex++;
         }
-        DNODE* addNode = createNode(data);
-        DNODE* nextNode = tempNode->pNext;
+        SNODE* addNode = createNode(data);
+        SNODE* nextNode = tempNode->pNext;
         //tempNode -> addNode -> nextNode
         if(addNode){
             tempNode->pNext = addNode;
@@ -194,7 +194,7 @@ bool addPos(List* &L, int data, int pos){
     return false;
 }
 
-void removePos(List* &L, int pos){
+void removePos(SList* &L, int pos){
     if(pos == 1)
         removeHead(L);
     else if(pos == countElements(L))
@@ -202,28 +202,28 @@ void removePos(List* &L, int pos){
     else{
         //Xóa Node sau 1 Node
         int curIndex = 1;
-        DNODE* tempNode = L->pHead;
+        SNODE* tempNode = L->pHead;
         while(curIndex < pos -1 ){
             tempNode = tempNode->pNext;
             curIndex++;
         }
         //tempNode -> deleteNode -> nextNode
-        DNODE* deleteNode = tempNode->pNext;
-        DNODE* nextNode = deleteNode->pNext;
+        SNODE* deleteNode = tempNode->pNext;
+        SNODE* nextNode = deleteNode->pNext;
         tempNode->pNext = nextNode;
         nextNode->pPrev = tempNode;
         delete deleteNode;
     }
 }
 
-bool addBefore(List* L, int data, int val){
+bool addBefore(SList* L, int data, int val){
     if(!isEmpty(L) && (countVal(L,val) != 0)){
-        DNODE* tempNode = L->pHead;
+        SNODE* tempNode = L->pHead;
         while(tempNode->pNext){
             //tempNode -> addNode -> valNode
             if(tempNode->pNext->key == val){
-                DNODE* addNode = createNode(data);
-                DNODE* valNode = tempNode->pNext;
+                SNODE* addNode = createNode(data);
+                SNODE* valNode = tempNode->pNext;
                 tempNode->pNext = addNode;
                 addNode->pPrev = tempNode;
                 addNode->pNext = valNode;
@@ -240,14 +240,14 @@ bool addBefore(List* L, int data, int val){
     return false;
 }
 
-bool addAfter(List* L, int data, int val){
+bool addAfter(SList* L, int data, int val){
     if(!isEmpty(L) && (countVal(L,val) != 0)){
-        DNODE* tempNode = L->pHead;
+        SNODE* tempNode = L->pHead;
         while(tempNode){
             //tempNode -> addNode -> nextNode
             if(tempNode->key == val){
-                DNODE* addNode = createNode(data);
-                DNODE* nextNode = tempNode->pNext;
+                SNODE* addNode = createNode(data);
+                SNODE* nextNode = tempNode->pNext;
                 tempNode->pNext = addNode;
                 addNode->pPrev = tempNode;
                 addNode->pNext = nextNode;
@@ -264,8 +264,8 @@ bool addAfter(List* L, int data, int val){
     return false;
 }
 
-void printList(List* L){
-    DNODE* tempNode = L->pHead;
+void printList(SList* L){
+    SNODE* tempNode = L->pHead;
     cout << "DSLK da nhap in xuoi( -> ): \n";
     while(tempNode){
         if (tempNode->pNext == NULL)
@@ -277,12 +277,12 @@ void printList(List* L){
     }
 }
 
-List* reverseList(List* L){
+SList* reverseList(SList* L){
     if(!isEmpty(L)){
         L->pTail = L->pHead;
         // prevNode <-> currNode
-        DNODE* prevNode = NULL;
-        DNODE* currNode = L->pHead;
+        SNODE* prevNode = NULL;
+        SNODE* currNode = L->pHead;
         while(currNode){
             prevNode = currNode->pPrev;
             currNode->pPrev = currNode->pNext;
@@ -295,14 +295,14 @@ List* reverseList(List* L){
     return L;
 }
 
-void removeDuplicate(List* &L){
-    DNODE* tempNode1 = L->pHead, *tempNode2;
+void removeDuplicate(SList* &L){
+    SNODE* tempNode1 = L->pHead, *tempNode2;
     while(tempNode1 && tempNode1->pNext){
         tempNode2 = tempNode1;
         while(tempNode2->pNext){
             if(tempNode1->key == tempNode2->pNext->key){
-                DNODE* dupNode = tempNode2->pNext;
-                DNODE* nextNode = dupNode->pNext;
+                SNODE* dupNode = tempNode2->pNext;
+                SNODE* nextNode = dupNode->pNext;
                 //tempNode2 -> dupNode -> nextNode
                 tempNode2->pNext = nextNode;
                 nextNode->pPrev = tempNode2;
@@ -315,18 +315,18 @@ void removeDuplicate(List* &L){
     }
 }
 
-bool removeElement(List* &L, int key){
+bool removeElement(SList* &L, int key){
     if (countVal(L, key) == 1 && countElements(L) == 1){
         removeHead(L);
         return true;
     }
     if(!isEmpty(L) && (countVal(L, key) != 0)){
-        DNODE* tempNode = L->pHead;
+        SNODE* tempNode = L->pHead;
         while(tempNode && tempNode->pNext && tempNode->pNext->pNext){
             if (tempNode->pNext->key == key){
                 //tempNode -> deleteNode -> nextNode
-                DNODE* deleteNode = tempNode->pNext;
-                DNODE* nextNode = deleteNode->pNext;
+                SNODE* deleteNode = tempNode->pNext;
+                SNODE* nextNode = deleteNode->pNext;
                 tempNode->pNext = nextNode;
                 nextNode->pPrev = tempNode;
                 delete deleteNode;
@@ -350,7 +350,7 @@ int main(){
     int nNode;
     cout << "Nhap vao so so luong Node cua DSLK: ";
     cin >> nNode;
-    List* list;
+    SList* list;
     for (int i = 0; i < nNode; i++){
         int key;
         cout << "Nhap vao key cua Node " << i+1 << ": ";

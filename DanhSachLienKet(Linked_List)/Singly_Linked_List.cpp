@@ -8,17 +8,17 @@ struct Node {
     ptrNode pNext;
 };
 
-struct List {
+struct SList {
     ptrNode pHead;
     ptrNode pTail;
 };
 
-void initList(List &l){
+void initList(SList &l){
     l.pHead = NULL;
     l.pTail = NULL;
 }
 
-bool isEmpty(List &l){
+bool isEmpty(SList &l){
     return (l.pHead == NULL && l.pTail == NULL);
 }
 
@@ -29,7 +29,7 @@ ptrNode createNode(int x){
     return p;
 }
 
-void insertHead(List &l, int x ){
+void insertHead(SList &l, int x ){
     ptrNode p = createNode(x);
     if (isEmpty(l))
         l.pHead = l.pTail = p;
@@ -39,7 +39,7 @@ void insertHead(List &l, int x ){
     }
 }
 
-void insertTail(List &l, int x ){
+void insertTail(SList &l, int x ){
     ptrNode p = createNode(x);
     if (isEmpty(l))
         l.pTail = l.pHead = p;
@@ -49,7 +49,7 @@ void insertTail(List &l, int x ){
     }
 }
 
-void insertAfter(List &l, ptrNode q, int x){
+void insertAfter(SList &l, ptrNode q, int x){
     ptrNode p = createNode(x);
     p->pNext = q->pNext;
     q->pNext = p;
@@ -59,7 +59,7 @@ void insertAfter(List &l, ptrNode q, int x){
 
 
 
-void insertBefore(List &l, ptrNode q, int x){
+void insertBefore(SList &l, ptrNode q, int x){
     if (l.pHead == q)
         insertHead(l,x);
     else{
@@ -72,7 +72,7 @@ void insertBefore(List &l, ptrNode q, int x){
     }
 }
 
-void print(List l){
+void print(SList l){
     ptrNode p = l.pHead;
     while (p){
         if(p->pNext == NULL)
@@ -86,7 +86,7 @@ void print(List l){
         //cout << p->data << " ";
 }
 
-void deleteHead(List &l){
+void deleteHead(SList &l){
     if (l.pHead == l.pTail){
         delete l.pHead;
         l.pHead = l.pTail = NULL;
@@ -99,7 +99,7 @@ void deleteHead(List &l){
     
 }
 
-void deleteTail (List &l){
+void deleteTail (SList &l){
     if (l.pHead == l.pTail){
         delete l.pTail;
         l.pHead = l.pTail = NULL;
@@ -114,7 +114,7 @@ void deleteTail (List &l){
     }
 }
 
-void deleteNode (List &l, ptrNode deletingNode){
+void deleteNode (SList &l, ptrNode deletingNode){
     if (deletingNode == l.pHead)
         deleteHead(l);
     else if (deletingNode == l.pTail)
@@ -126,7 +126,7 @@ void deleteNode (List &l, ptrNode deletingNode){
     }   
 }
 
-void removebefore(List &list, ptrNode currNode){
+void removebefore(SList &list, ptrNode currNode){
     if (isEmpty(list) || currNode == NULL)
         return;
     else if (list.pHead->pNext == currNode)
@@ -146,7 +146,7 @@ void removebefore(List &list, ptrNode currNode){
     }
 }
 
-void deleteList(List &l){
+void deleteList(SList &l){
     ptrNode tempNode1;
     ptrNode tempNode2 = l.pHead;
     while (tempNode2){
@@ -157,7 +157,7 @@ void deleteList(List &l){
     l.pHead = l.pTail = NULL;
 }
 
-ptrNode findItembyData (List l, int x){
+ptrNode findItembyData (SList l, int x){
     ptrNode p = l.pHead;
     while (p){
         if (p->data == x)
@@ -167,7 +167,7 @@ ptrNode findItembyData (List l, int x){
     return p;
 }
 
-ptrNode findItemByIndex (List l, int i){
+ptrNode findItemByIndex (SList l, int i){
    ptrNode p = l.pHead;
    int temp = 0;
    while (p){
@@ -195,7 +195,7 @@ void checkPosition(int &index, int n){
     }
 }
 
-int countNumberOfValue(List l, int x){
+int countNumberOfValue(SList l, int x){
     ptrNode p = l.pHead;
     int count = 0;
     while(p){
@@ -206,13 +206,13 @@ int countNumberOfValue(List l, int x){
     return count;
 }
 
-void createListFromArray(List &l, int a[], int n){
+void createListFromArray(SList &l, int a[], int n){
     for (int i = 0; i < n; i++){
         insertTail(l, a[i]);
     }
 }
 
-void create2NewLinkedList(List originalList, List &newList1, List &newList2){
+void create2NewLinkedList(SList originalList, SList &newList1, SList &newList2){
     ptrNode temp = originalList.pHead;
     while(temp){
         //Lẻ
@@ -247,7 +247,7 @@ void MoveToFront(ptrNode &Head, ptrNode &Tail, ptrNode MovingNode){
     }
 }
 
-void reverseList(List &list){
+void reverseList(SList &list){
     if (isEmpty(list))
         return;
     else{
@@ -264,7 +264,7 @@ void reverseList(List &list){
     }
 }
 
-int countNode (List list){
+int countNode (SList list){
     int count = 0;
     if (!isEmpty(list)){
         ptrNode tempNode = list.pHead;
@@ -276,7 +276,7 @@ int countNode (List list){
     return count;
 }
 
-void findKNode(List list, int k){
+void findKNode(SList list, int k){
     //Nếu tính vị trí của Node đầu tiên là 0
     if (k-1 < 0 || k - 1 >= countNode(list)|| isEmpty(list))
         return;
@@ -295,7 +295,7 @@ void findKNode(List list, int k){
 int main(){
     int n;
     string choice;
-    List l;
+    SList l;
     initList(l);
 
     system("cls");
