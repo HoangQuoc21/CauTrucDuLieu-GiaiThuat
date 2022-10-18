@@ -9,7 +9,7 @@ void doublyLinkedList(){
     cout << "==================== DOUBLY LINKED LIST =================\n";
     cout << "Nhap vao so so luong Node cua DSLK: ";
     cin >> nNode;
-    SList* list;
+    DList* list;
     for (int i = 0; i < nNode; i++){
         int key;
         cout << "Nhap vao key cua Node " << i+1 << ": ";
