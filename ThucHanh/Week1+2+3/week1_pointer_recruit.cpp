@@ -41,25 +41,27 @@ int* findMax(int* arr, int n){
 }
 
 int* findLongestAscendingSubarray(int* a, int n, int& length){
-    //Tìm length và lưu vị trí bắt đầu của dãy con lớn nhất (j)
     length = 1;
-    int* indexOfSubArray = &a[0];
-    for (int i = 0; i < n; i++){
-        int currentLength = 1;
-        int* currentIndex = &a[i];
-        for (int j = i; j < n-1; j++){
-            if(a[j] < a[j+1])
-                currentLength++;
-            else
-                break;
-        }
-        if (currentLength > length){
-            length = currentLength;
-            indexOfSubArray = currentIndex;
-            i = i + length;
+    int lengthMax = 1;
+    int currIndex = 0;
+    for (int i = 1; i <= n; i++){
+        if (a[i] > a[i - 1])
+            length++;
+        else{
+            if (length > lengthMax){
+                lengthMax = length;
+                currIndex = i - length;
+            }
+            length = 1;
         }
     }
-    return indexOfSubArray;
+    // Khi i == n
+    if (length > lengthMax){
+        lengthMax = length;
+        currIndex = n - length + 1;
+    }
+    length = lengthMax;
+    return &a[currIndex];
 }
 
 void swapArrays(int* &a, int* &b, int &na, int &nb){

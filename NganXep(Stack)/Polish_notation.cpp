@@ -242,8 +242,8 @@ int main(){
         else if (choice == "2"){
             string postfix_notation = infixToPostfix(infix_notation);
             int value = EvaluatePostfix(postfix_notation);
-            cout << "-Bieu Thuc Tien To: " << postfix_notation << endl;
-            cout << "-Gia tri cua Bieu Thuc Tien To (Chi dung khi toan hang la so): " << value << endl;
+            cout << "-Bieu Thuc Hau To: " << postfix_notation << endl;
+            // cout << "-Gia tri cua Bieu Thuc Tien To (Chi dung khi toan hang la so): " << value << endl;
         }
         else if (choice == "3"){
             cout << "-Hay nhap Bieu Thuc Trung To: ";
@@ -258,7 +258,7 @@ int main(){
         }
         else if (choice == "5"){
             string postfix_notation;
-            cout << "-Hay nhap Bieu Thuc Tien To: ";
+            cout << "-Hay nhap Bieu Thuc Hau To: ";
             cin >> postfix_notation;
             int value = EvaluatePostfix(postfix_notation);
             cout << "Gia tri cua Bieu Thuc Tien To vua nhap la: " << value << endl;

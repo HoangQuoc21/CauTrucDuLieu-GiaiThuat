@@ -151,16 +151,15 @@ void removeAfter(SList* L, int val){
                 tempNode->pNext = deleteNode->pNext;
                 delete deleteNode;
             }
-            else
-                tempNode = tempNode->pNext;
+            tempNode = tempNode->pNext;
         }
     }
 }
 
-//QUY ƯỚC: vị trí (index) trong danh sách liên kết bắt đầu từ 1;
+//QUY ƯỚC: vị trí (index) trong danh sách liên kết bắt đầu từ 0;
 bool checkPos(SList* L, int pos){
     if (!isEmpty(L))
-        return (pos > 0 && (pos <= countElements(L)));
+        return (pos >= 0 && (pos < countElements(L)));
     return false;
 }
 
@@ -173,7 +172,7 @@ bool addPos(SList* &L, int data, int pos){
         //thêm Node sau 1 Node
         int curIndex = 1;
         SNODE* tempNode = L->pHead;
-        while(curIndex < pos -1  ){
+        while(curIndex < pos ){
             tempNode = tempNode->pNext;
             curIndex++;
         }
@@ -310,7 +309,8 @@ bool removeElement(SList* &L, int key){
                 tempNode->pNext = tempNode->pNext->pNext;
                 delete deleteNode;
             }
-            tempNode = tempNode->pNext;
+            else 
+                tempNode = tempNode->pNext;
         }
         if(L->pHead->key == key)
             removeHead(L);
