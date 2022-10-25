@@ -308,7 +308,17 @@ void RadixSort(int a[], int n)
 
 
 int main(){
-    system("cls");
-    int a[] = {-99,1,0,5,6,7,8,9,10,2,-100,5};
-    int n = 12;
+    while(1){
+        system("cls");
+        int a[100]; 
+        int n;
+        cin >> n;
+        for (int i = 0; i < n; i++)
+            cin >> a[i];
+        InterchangeSort(a, n);
+        for (int i = 0; i < n; i++)
+            cout << a[i] << " ";
+        cout << endl;
+        system("pause");
+    }
 }
