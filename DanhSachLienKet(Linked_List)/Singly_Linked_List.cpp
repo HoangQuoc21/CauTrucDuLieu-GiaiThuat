@@ -1,9 +1,9 @@
 #include <iostream>
 using namespace std;
 
-typedef struct Node* ptrNode;
+typedef struct NODE* ptrNode;
 
-struct Node {
+struct NODE {
     int data;
     ptrNode pNext;
 };
@@ -23,7 +23,7 @@ bool isEmpty(DList &l){
 }
 
 ptrNode createNode(int x){
-    ptrNode p = new Node;
+    ptrNode p = new NODE;
     p->data = x;
     p->pNext = NULL;
     return p;

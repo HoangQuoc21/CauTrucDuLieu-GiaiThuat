@@ -1,12 +1,12 @@
 #include <iostream>
 using namespace std;
 
-struct Node{
+struct NODE{
     int data;
-    Node* pNext;
+    NODE* pNext;
 };
 
-typedef Node* ptrNode;
+typedef NODE* ptrNode;
 
 struct Clist{
     ptrNode pHead;
@@ -14,7 +14,7 @@ struct Clist{
 };
 
 ptrNode createNode (int x){
-    ptrNode newNode = new Node;
+    ptrNode newNode = new NODE;
     newNode->data = x;
     newNode->pNext = NULL;
     return newNode;

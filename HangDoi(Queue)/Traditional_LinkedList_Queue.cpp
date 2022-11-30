@@ -1,9 +1,9 @@
 #include <iostream>
 using namespace std;
 
-typedef struct Node* ptrNode;
+typedef struct NODE* ptrNode;
 
-struct Node{
+struct NODE{
     int data;
     ptrNode pNext;
 };
@@ -14,7 +14,7 @@ struct Queue{
 };
 
 ptrNode createNode (int x){
-    ptrNode newNode = new Node;
+    ptrNode newNode = new NODE;
     if (newNode == NULL){
         cout << "Khong du bo nho.\n";
         return NULL;
