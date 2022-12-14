@@ -255,27 +255,6 @@ bool isCompleteGraph(int**matrix, int vertices, int edges) {
 	return false;
 }
 
-//7. Hàm kiểm tra đồ thị có phải đồ thị vòng hay không
-bool isCircularGraph(int** matrix, int vertices, int edges) {
-	if (vertices <= 2 || vertices != edges)
-		return false;
-	if (isDirected(matrix, vertices)) {
-		//Với đồ thị có hướng
-		vector<pair<int, int>> degrees = degreeDirectedGraph(matrix, vertices);
-		for (auto x : degrees)
-			if (x.first != 1 || x.second != 1)
-				return false;
-	}
-	else {
-		//Với đồ thị vô hướng
-		vector<int> degrees = degreeUndirectedGraph(matrix, vertices);
-		for (auto x : degrees)
-			if (x != 2)
-				return false;
-	}
-	return true;
-}
-
 //III. CÁC THUẬT TOÁN CÓ SỬ DỤNG DFS/BFS:
 //Đồ thị đang xét là đơn đồ thị, nghĩa là không có khuyên hay cạnh song song
 
@@ -386,7 +365,28 @@ int countTreeConnectedComponent(vector<int>* list, int vertices,bool visited[MAX
 	return count;
 }
 
-//4. Hàm kiểm tra đồ thị có phải đồ thị hai phía hay không 
+//4. Hàm kiểm tra đồ thị có phải đồ thị vòng hay không
+bool isCircularGraph(int** matrix, int vertices, int edges, int connected_component) {
+	if (vertices <= 2 || vertices != edges || connected_component != 1)
+		return false;
+	if (isDirected(matrix, vertices)) {
+		//Với đồ thị có hướng
+		vector<pair<int, int>> degrees = degreeDirectedGraph(matrix, vertices);
+		for (auto x : degrees)
+			if (x.first != 1 || x.second != 1)
+				return false;
+	}
+	else {
+		//Với đồ thị vô hướng
+		vector<int> degrees = degreeUndirectedGraph(matrix, vertices);
+		for (auto x : degrees)
+			if (x != 2)
+				return false;
+	}
+	return true;
+}
+
+//5. Hàm kiểm tra đồ thị có phải đồ thị hai phía hay không 
 //Thường check = tô màu, 1 phía là 1 màu, nếu đồ thị chỉ có 2 màu thì là đồ thị 2 phía
 //-Hàm BFS để tô màu 1 thành phần liên thông:
 // Quy định mảng màu: 0 -> noncolor; 1 -> Red; 2 -> Blue
@@ -427,7 +427,7 @@ bool isBiGraph(vector<int>* list,int vertices, int color[MAX]) {
 	return true;
 }
 
-//5. Hàm kiểm tra đồ thị có phải đồ thị hai phía đầy đủ hay không 
+//6. Hàm kiểm tra đồ thị có phải đồ thị hai phía đầy đủ hay không 
 //Đồ thị 2 phía sẽ có 2 tập có lần lượt m đỉnh và n đỉnh  (m+n = số đỉnh ban đầu của đồ thị)
 //Đồ thị 2 phía đầy đủ có số cạnh = m*n
 bool isCompleteBiGraph(int **matrix, vector<int>* list, int vertices, int edges, int color[MAX]) {
@@ -444,7 +444,7 @@ bool isCompleteBiGraph(int **matrix, vector<int>* list, int vertices, int edges,
 	return false;
 }
 
-//6. Hàm đếm đỉnh trụ (khớp) và cạnh cầu:
+//7. Hàm đếm đỉnh trụ (khớp) và cạnh cầu:
 //Loại bỏ đỉnh trụ hoặc cạnh cầu thì sẽ làm tăng thành phần liên thông lên
 //a. Hàm đếm đỉnh trụ(khớp):
 int countCutVertices(vector<int>* list, int vertices, bool visited[MAX]) {
@@ -616,7 +616,7 @@ int main() {
 	else
 		cout << "-This is not a complete graph.\n";
 
-	if (isCircularGraph(matrix, vertices, edges))
+	if (isCircularGraph(matrix, vertices, edges, component))
 		cout << "-This is a circular graph.\n";
 	else
 		cout << "-This is not a circular graph.\n";
