@@ -74,16 +74,17 @@ int** listToMatrix(vector <int>* list, int vertices) {
 
 //2. CÁC HÀM VỚI DANH SÁCH KỀ:
 //a. Hàm đọc danh sách kề từ file:
-vector<int>* readList(string file_name, int vertices) {
+vector<int>* readList(string file_name, int &vertices) {
 	fstream fin(file_name);
 	if (!fin.is_open()) {
 		cout << "Cann't open " << file_name << " to read.\n";
 		exit(1);
 	}
 	else {
-		vector <int>* list = new vector<int>[vertices];
 		string line;
 		getline(fin, line);
+		vertices = stoi(line);
+		vector <int>* list = new vector<int>[vertices];
 		int index = 0;
 		
 		while (getline(fin, line)) {
@@ -352,22 +353,21 @@ int countConnectedComponent(vector<int>* list, int vertices, bool visited[MAX]) 
 
 //b. Đếm thành phần liên thông là cây:
 //DFS4 vừa duyệt chiều sâu, vừa kiểm tra thành phần liên thông đang duyệt có tồn tại chu trình hay không 
-bool DFS4(vector<int>* list, int par, int u, bool visited[MAX]) {
-	bool isCycle = true;
+bool DFS4(vector<int>* list, int parent, int u, bool visited[MAX]) {
 	visited[u] = true;
 	for (int v : list[u]) {
 		if (!visited[v]) {
-			if (DFS4(list, u, v, visited))
-				isCycle = true;
-			else
-				isCycle = false;
+			if (DFS4(list, u, v, visited)) {
+				//cout << v << endl;
+				return true;
+			}
 		}
-		else if (u != par) {
-			//cout << u << endl;
-			isCycle = false;
+		else if (v != parent) {
+			//cout << v << endl;
+			return true;
 		}	
 	}
-	return isCycle;
+	return false;
 }
 
 int countTreeConnectedComponent(vector<int>* list, int vertices,bool visited[MAX]) {
@@ -375,7 +375,8 @@ int countTreeConnectedComponent(vector<int>* list, int vertices,bool visited[MAX
 	for (int i = 0; i < vertices; i++) {
 		if (!visited[i]) {
 			//Nếu duyệt qua DFS (lấy dc 1 thành phần liên thông) mà thành phần liên thông đó không có chu trình thì thành phần liên thông đó là thành phần liên thông cây
-			if (!DFS4(list, i, 0, visited)) {
+			//parent của đỉnh đầu tiên (đỉnh 0) là -1
+			if (!DFS4(list, -1, i, visited)) {
 				//cout << "Thanh phan lien thong cay: " << i << endl;
 				count++;
 			}
@@ -465,13 +466,24 @@ int countCutVertices(vector<int>* list, int vertices, bool visited[MAX]) {
 
 //b. Hàm đếm cạnh cầu:
 //*Sử dụng danh sách cạnh để lưu các cạnh dưới dạng (đỉnh đầu-đỉnh cuối)
-//-Hàm tạo 1 danh sách cạnh từ 1 danh sách kề:
-vector<pair<int, int>> edgeList(vector<int>*list, int vertices) {
+//-Hàm tạo 1 danh sách cạnh từ 1 ma trận kề:
+vector<pair<int, int>> edgeList(int ** matrix, int vertices) {
 	vector<pair<int, int>> edge_list;
-	for (int x = 0; x < vertices; x++) {
-		for (int y : list[x]) {
-			if (list[x].size() > 0)
-				edge_list.push_back({ x,y });
+	//Nếu là ma trận có hướng
+	if (isDirected(matrix, vertices)) {
+		for (int x = 0; x < vertices; x++) {
+			for (int y = 0; y < vertices; y++)
+				if(matrix[x][y] == 1)
+					edge_list.push_back({ x,y });
+		}
+	}
+	//nếu là ma trận vô hướng
+	else {
+		for (int x = 0; x < vertices; x++) {
+			for (int y = x; y < vertices; y++) {
+				if (matrix[x][y] == 1)
+					edge_list.push_back({ x,y });
+			}
 		}
 	}
 	return edge_list;
@@ -520,9 +532,10 @@ int countBridgeEdges(vector<int>* list, vector<pair<int, int>> edge_list,  int v
 
 int main() {
 	string matrix_file, list_file;
-	int vertices, edges;
+	int vertices(0), edges;
+	system("cls");
 	cout << "*******************************************************\n";
-	cout << "*                  HOME WORK 3: GRAPH                 *\n";
+	cout << "*                  HOME WORK 5: GRAPH                 *\n";
 	cout << "*******************************************************\n";
 	cout << "Iput the file containing adjacency matrix: ";
 	cin >> matrix_file;
@@ -531,7 +544,8 @@ int main() {
 	
 	int** matrix = readMatrix(matrix_file, vertices);
 	vector<int>* list = readList(list_file, vertices);
-	vector<pair<int, int>> edge_list = edgeList(list, vertices);
+	//vector<int>* list = matrixToList(matrix, vertices);
+	vector<pair<int, int>> edge_list = edgeList(matrix, vertices);
 	edges = countEdges(matrix, list, vertices);
 	cout << "=======================================================\n";
 	if (isDirected(matrix, vertices))
@@ -627,6 +641,6 @@ int main() {
 	cout << "-Number of bridge edges: " << countBridgeEdges(list, edge_list, vertices, visited) << endl;
 	
 	cout << "=======================================================\n";
-
+	system("pause");
 	return 0;
 }
