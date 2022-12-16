@@ -352,7 +352,7 @@ void printEdges(vector<vector<int>> edges, int so_luong_canh) {
     
 }
 
-int** convertAdjacencyMatrix(vector<vector<int>> edges, int n, int so_luong_canh) {
+int** edgeListToMatrix(vector<vector<int>> edges, int n, int so_luong_canh) {
 	int** matrix = new int* [n]{};
 	for (int i = 0; i < n; i++)
 		matrix[i] = new int[n]{};
@@ -457,7 +457,7 @@ int main() {
 	cout << "--------------------------\n";
 	printEdges(edges, so_luong_canh);
 	cout << "--------------------------\n";
-	int** matrix = convertAdjacencyMatrix(edges, n, so_luong_canh);
+	int** matrix = edgeListToMatrix(edges, n, so_luong_canh);
 	PrintMatrix(matrix, n);
 	cout << "--------------------------\n";
 	
