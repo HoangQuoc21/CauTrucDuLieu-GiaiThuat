@@ -1,0 +1,468 @@
+Alligator
+(ˈælɪgeɪtə)
+Con cá sấu
+2
+Bat
+(bæt)
+Con dơi
+2
+Bear
+(beə)
+Con gấu.
+2
+Beaver
+(ˈbiːvə)
+Con hải ly
+2
+Blue whale
+(bluː weɪl)
+Cá voi xanh
+5
+Boar
+(bɔː)
+Con lợn hoang
+2
+Buffalo
+(ˈbʌfələʊ)
+Con trâu nước
+2
+Bull
+(bʊl)
+Con bò đực
+1
+Calf
+(kɑːf)
+Con bê
+1
+Camel
+(ˈkæməl)
+Con lạc đà
+1
+Carp
+/kɑrp/
+Cá chép
+5
+Cat
+(kæt)
+Con mèo
+1
+Caterpillar
+(ˈkætəpɪlə)
+Sâu bướm
+3
+Chameleon
+(kəˈmiːliən)
+Con tắc kè hoa
+4
+Chick
+(ʧɪk)
+Con gà con
+1
+Chimpanzee
+(ˌʧɪmpənˈziː)
+Con hắc tinh tinh
+2
+Chipmunk
+/ˈʧɪpmʌŋk/
+Sóc chuột
+2
+Clam
+/klæm/
+Con trai
+5
+Cobra
+(ˈkəʊbrə)
+Con rắn hổ mang
+4
+Cockroach
+(ˈkɒkrəʊʧ)
+Con gián
+3
+Cod
+/kɑd/
+Cá tuyết
+5
+Cow
+(kaʊ)
+Con bò cái
+1
+Coyote
+/’kɔiout/
+Chó sói
+2
+Crab
+(kræb)
+Con cua
+5
+Crocodile
+(ˈkrɒkədaɪl)
+Con cá sấu
+4
+Dinosaurs
+(ˈdaɪnəʊsɔːz)
+Con khủng long
+4
+Dog
+(dɒg)
+Con chó
+1
+Donkey
+(ˈdɒŋki)
+Con lừa
+2
+Dove
+(dəv)
+Bồ câu
+1
+Dragon
+(ˈdrægən)
+Con rồng
+4
+Duck
+(dək)
+Vịt
+1
+Eagle
+/ˈiːgl/
+Chim đại bàng
+6
+Eel
+/il/
+Lươn
+5
+Elephant
+(ˈɛlɪfənt)
+Con voi.
+2
+Falcon
+/ˈfɔːlkən/
+Chim ưng
+6
+Feather
+/ˈfɛðə/
+Lông vũ
+6
+Fox
+(fɒks)
+Con cáo.
+2
+Frog
+(frɒg)
+Con ếch
+4
+Giraffe
+(ʤɪˈrɑːf)
+Con hươu cao cổ
+2
+Goldfish
+(’ɡoʊld,fɪʃ)
+Cá vàng
+1
+Grasshopper
+(ˈgrɑːsˌhɒpə)
+Con châu chấu
+3
+Hare
+/hɜr/
+Thỏ rừng
+2
+Hedgehog
+(ˈhɛʤhɒg)
+Con nhím
+2
+Heron
+/ˈhɛrən/
+Diệc
+6
+Herring
+/’heriɳ/
+Cá trích
+5
+Hippopotamus
+(ˌhɪpəˈpɒtəməs)
+Con hà mã
+2
+Honeycomb
+(ˈhʌnɪkəʊm)
+Sáp ong
+3
+Jaguar
+(ˈʤægjʊə)
+Con báo đốm
+2
+Jellyfish
+(ˈʤɛlɪfɪʃ)
+Con sứa
+5
+Jellyfish
+/ˈʤɛlɪfɪʃ/
+Con sứa
+5
+Kangaroo
+(ˌkæŋgəˈru)
+Con chuột túi
+2
+Koala bear
+(kəʊˈɑːlə beə)
+Gấu túi
+2
+Ladybug
+(ˈleɪdɪbʌg)
+Con bọ rùa
+3
+Lion
+(ˈlaɪən)
+Con sư tử
+2
+Lizard
+(ˈlɪzəd)
+Con thằn lằn
+4
+Lobster
+/ˈlɒbstə/
+Tôm hùm
+5
+Mammoth
+/mæməθ/
+Voi ma mút
+2
+Mink
+/mɪŋk/
+Con chồn
+2
+Minnow
+/’minou/
+Cá tuế
+5
+Mosquito
+(məsˈkiːtəʊ)
+Con muỗi
+3
+Nest
+/nɛst/
+Cái tổ
+6
+Octopus
+(ˈɒktəpəs)
+Bạch tuộc
+5
+Orca
+/’ɔ:kə/
+Cá kình
+5
+Ostrich
+/ˈɒstrɪʧ/
+Đà điểu
+6
+Owl
+/aʊl/
+Cú mèo
+6
+Panda
+(ˈpændə)
+Con gấu trúc
+2
+Parasites
+(ˈpærəsaɪts)
+Ký sinh trùng
+3
+Parrot
+(pærət)
+Con vẹt
+1
+Peacock
+/ˈpiːkɒk/
+Con công (trống)
+6
+Penguin
+(ˈpɛŋgwɪn)
+Con chim cánh cụt
+5
+Perch
+/pɜrʧ/
+Cá rô
+5
+Piglet
+(ˈpɪglət)
+Lợn con
+1
+Plaice
+/pleɪs/
+Cá bơn
+5
+Polar bear
+(ˈpəʊlə beə)
+Con gấu Bắc cực
+2
+Porcupine
+(ˈpɔːkjʊpaɪn)
+Con nhím.
+2
+Porcupine
+(ˈpɔːkjʊpaɪn)
+Con nhím
+2
+Praying mantis
+(ˈpreɪɪŋ ˈmæntɪs)
+Bọ ngựa
+3
+Puma
+/pjumə/
+Con báo
+2
+Raccoon
+(rəˈkuːn)
+Con gấu mèo.
+2
+Rhinoceros
+(raɪˈnɒsərəs)
+Con tê giác
+2
+Salmon
+/sæmən/
+Cá hồi
+5
+Sardine
+/sɑ:’din/
+Cá mòi
+5
+Sawfish
+/sɑfɪʃ/
+Cá cưa
+5
+Scallop
+/skɑləp/
+Sò điệp
+5
+Seagull
+/ˈsiːgʌl/
+Mòng biển
+5
+Seahorse
+(kræb)
+Con cá ngựa
+5
+Seal
+(siːl)
+Con hải cẩu
+5
+Shark
+/ʃɑrk/
+Cá mập
+5
+Shellfish
+/ˈʃɛlfɪʃ/
+Ốc
+5
+Slug
+/slʌg/
+Sên
+5
+Snail
+(sneil)
+Ốc sên
+4
+Sparrow
+/ˈspærəʊ/
+Chim sẻ
+6
+Squid
+(skwɪd)
+Con mực
+5
+Squirrel
+(ˈskwɪrəl)
+Con sóc.
+2
+Squirrel
+(ˈskwɪrəl)
+Con sóc
+2
+Starfish
+(ˈstɑːfɪʃ)
+Con sao biển
+5
+Stingray
+(stin'rei)
+Cá đuối
+5
+Swan
+/swɒn/
+Thiên nga
+6
+Swordfish
+(sɔːdfɪʃ)
+Con cá kiếm
+5
+Talon
+/ˈtælən/
+Móng vuốt
+6
+Tarantula
+(təˈræntjʊlə)
+Con nhện lớn
+3
+Tarantulatə
+(ˈræntjʊlə)
+Loại nhện lớn
+3
+Toad
+(təʊd)
+Con cóc
+4
+Turkey
+(ˈtɜːki)
+Gà Tây
+1
+Turtle
+(tɜːtl)
+Con rùa
+4
+Turtle
+(ˈtɜːtl)
+Con rùa
+5
+White mouse
+(waɪt maʊs)
+Con chuột bạch
+1
+Wolf
+(wʊlf)
+Con chó sói
+2
+Woodpecker
+/ˈwʊdˌpɛkə/
+Chim gõ kiến
+6
+Zebra
+(ˈziːbrə)
+Con ngựa vằn
+2
+Alligator
+(ˈælɪgeɪtə)
+Con cá sấu
+2
+Bat
+(bæt)
+Con dơi
+2
+Bear
+(beə)
+Con gấu.
+2
+Beaver
+(ˈbiːvə)
+Con hải ly
+2
+Blue whale
+(bluː weɪl)
+Cá voi xanh
+5
+Boar
+(bɔː)
+Con lợn hoang
+2
+Buffalo
+(ˈbʌfələʊ)
+Con trâu nước
+2
