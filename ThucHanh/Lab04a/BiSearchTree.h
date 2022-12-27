@@ -3,6 +3,7 @@
 #include <queue>
 #include <cmath>
 using namespace std;
+#define COUNT 10
 
 struct TNODE{
     int key;
@@ -244,4 +245,21 @@ bool isFullBST(TNODE* pRoot){
         return false;
     int height = Height(pRoot);
     return countLeaf(pRoot) == pow(2, height - 1);
+}
+
+//21. Mô tả 1 cây nhị phân theo chiều ngang
+//space lúc đầu = 0
+void ProcessTree(TNODE* root, int space){
+    if(!root)
+        return;
+
+    space += COUNT;
+
+    ProcessTree(root->pRight, space);
+    cout << endl;
+    for (int i = COUNT; i < space; i++)
+        cout << " ";
+    cout << root->key << endl;
+
+    ProcessTree(root->pLeft, space);
 }

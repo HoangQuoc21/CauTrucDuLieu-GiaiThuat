@@ -1,6 +1,7 @@
 #include <iostream>
 #include "BiSearchTree.h"
 using namespace std;
+#define COUNT 10
 
 int main(){
     system("cls");
@@ -9,19 +10,19 @@ int main(){
     cout << "*******************************************************\n";
 
     //===== Nhập giá trị các Node thủ công: =====
-    int nNode;
-    cout << "-Nhap vao so luong node cua cay (nNode >= 0): ";
-    cin >> nNode;
-    int *Nodes = new int [nNode];
-    for (int i = 0; i < nNode; i++){
-        cout << "-Node " << i << ": ";
-        cin >> Nodes[i];
-    }
+    // int nNode;
+    // cout << "-Nhap vao so luong node cua cay (nNode >= 0): ";
+    // cin >> nNode;
+    // int *Nodes = new int [nNode];
+    // for (int i = 0; i < nNode; i++){
+    //     cout << "-Node " << i << ": ";
+    //     cin >> Nodes[i];
+    // }
     //== Khóa 8 dòng trên và dòng 43 để sử dụng test case cứng ==
 
     //===== Test case cứng(Mở khóa 2 dòng dưới đây): ====== 
-    // int nNode = 20;
-    // int Nodes[100] = {9,5,3,20,60,81,14,4,7,56,13,1,15,8,6,100,99,101,102,103};
+    int nNode = 20;
+    int Nodes[100] = {9,5,3,20,60,81,14,4,7,56,13,1,15,8,6,100,99,101,102,103};
     //                   ___9___
     //                 /        \
     //                5         20
@@ -38,7 +39,7 @@ int main(){
     //                                       \
     //                                       103
     TNODE* pRoot = createTree(Nodes, nNode);
-    delete [] Nodes;
+    //delete [] Nodes;
     while(1){
         string choice;
         system("cls");
@@ -46,6 +47,8 @@ int main(){
         cout << "*                     HOME WORK 2                     *\n";
         cout << "*******************************************************\n";
         cout << "================= BINARY SEARCHING TREE ===============\n";
+        cout << "-------------------------------------------------------\n";
+        ProcessTree(pRoot,0);
         cout << "-------------------------------------------------------\n";
         cout << "-Cay da nhap in theo tien thu tu: ";
         NLR(pRoot);
