@@ -38,7 +38,6 @@ void add_node(int pQ[],int &length, int new_data) {
 
 //Câu 03:
 void searchDel(TNODE* &root, int k){
-    //TNODE* base = root;
     TNODE* curr = root;
     TNODE* prev = NULL;
 
@@ -103,32 +102,57 @@ void searchDel(TNODE* &root, int k){
 }
 
 
+void addNode(TNODE*& root, int k){
+    TNODE* new_node = createNode(k);
+    if (!root){
+        root = new_node;
+        return;
+    }
+    TNODE* temp = root;
+    TNODE* curr = NULL;
+    while (temp) {
+        curr = temp;
+        if (k < temp->key)
+            temp = temp->pLeft;
+        else
+            temp = temp->pRight;
+    }
+    
+    if (k < curr->key)
+        curr->pLeft = new_node;
+    else
+        curr->pRight = new_node;
+}
+
+
 
 int main(){
-    system("cls");
-    int length = 0;
-    int pQ[10];
-    for (int i = 9; i >= 0; i--)
-        add_node(pQ,length,i);
+    // system("cls");
+    // int length = 0;
+    // int pQ[10];
+    // for (int i = 9; i >= 0; i--)
+    //     add_node(pQ,length,i);
 
-    for (int i = 0; i < length; i++)
-        cout << pQ[i] << " ";
+    // for (int i = 0; i < length; i++)
+    //     cout << pQ[i] << " ";
 
-    //int n = 10;
-    //int a[10] = {21,64,8,9,11,100,99,5,2,67};
-    //TNODE* root = NULL;
-    // root = createTree(a,n);
-    // while(1){
-    //     system("cls");
-    //     LevelOrder(root);
-    //     int k;
-    //     cout << "k: ";
-    //     cin >> k;
-    //     searchDel(root,k);
-    //     cout << "-----------------------------------\n";
-    //     LevelOrder(root);
-    //     system("pause");
-    // }
+    int n = 11;
+    int a[11] = {21,64,8,9,11,100,99,5,2,67,21};
+    TNODE* root = NULL;
+    //root = createTree(a,n);
+    for (int i = 0; i < n; i++)
+        addNode(root, a[i]);
+    while(1){
+        system("cls");
+        LevelOrder(root);
+        int k;
+        cout << "k: ";
+        cin >> k;
+        searchDel(root,k);
+        cout << "-----------------------------------\n";
+        LevelOrder(root);
+        system("pause");
+    }
     
     return 0;
 }
