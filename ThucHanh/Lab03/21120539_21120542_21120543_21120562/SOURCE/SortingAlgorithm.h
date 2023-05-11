@@ -19,6 +19,7 @@ void selectionSort(int a[], int n) {
         swap(a[min_idx], a[i]);
     }
 }
+
 //2. Insertion sort:
 //Di chuyển những phần từ nhỏ hơn key về trước key
 void insertionSort(int a[], int n) {
@@ -32,6 +33,7 @@ void insertionSort(int a[], int n) {
         a[j + 1] = key;
     }
 }
+
 //3. Bubble sort:
 //So sánh 2 phần tử liên tiếp từ đầu mảng rồi đổi chỗ chúng (nếu cần), lặp lại cho đến khi được mảng tăng
 void bubbleSort(int a[], int n) {
@@ -284,6 +286,7 @@ void countingSort(int a[], int n) {
     delete[] countArray;
     delete[] temp;
 }
+
 //10. Radix sort:
 //Sắp xếp theo cơ số
 //Dùng thùng chứa, xét từ 0 đến 9, sắp xếp mảng theo chữ số hàng đơn  vị, đến hàng chục, đến hàng trăm, đến ... m với m là số chữ số của số lớn nhất
