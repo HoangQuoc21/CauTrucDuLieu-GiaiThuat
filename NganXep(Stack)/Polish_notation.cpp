@@ -68,6 +68,7 @@ bool isOperator(char character){
     return (character == '*' || character == '/' || character == '+' || character == '-' || character == '&' || character == '^');
 }
 
+//Cùng cấp thì ưu tiên từ trái qua phải
 int getPriority(char c){
     if (c == '^')
         return 4;
@@ -81,6 +82,7 @@ int getPriority(char c){
         return 0;
 }
 
+//Chuyển trung tố sang hậu tố
 string infixToPostfix(string infix_notation){
     string postfix_notation;
     Stack stack;
@@ -243,7 +245,7 @@ int main(){
             string postfix_notation = infixToPostfix(infix_notation);
             int value = EvaluatePostfix(postfix_notation);
             cout << "-Bieu Thuc Hau To: " << postfix_notation << endl;
-            // cout << "-Gia tri cua Bieu Thuc Tien To (Chi dung khi toan hang la so): " << value << endl;
+            cout << "-Gia tri cua Bieu Thuc Tien To (Chi dung khi toan hang la so): " << value << endl;
         }
         else if (choice == "3"){
             cout << "-Hay nhap Bieu Thuc Trung To: ";
