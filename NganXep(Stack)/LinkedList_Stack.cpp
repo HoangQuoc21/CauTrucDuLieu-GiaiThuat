@@ -2,9 +2,9 @@
 #include <stdlib.h>
 using namespace std;
 
-typedef struct NODE* ptrNode;
+typedef struct node* ptrNode;
 
-struct NODE{
+struct node{
     int data;
     ptrNode pNext;
 };
@@ -14,7 +14,7 @@ struct Stack{
 };
 
 ptrNode createNode (int x){
-    ptrNode newNode = new NODE;
+    ptrNode newNode = new node;
     if (newNode == NULL)
         return NULL;
     else{

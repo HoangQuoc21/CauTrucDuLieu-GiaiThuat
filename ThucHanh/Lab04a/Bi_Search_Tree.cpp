@@ -4,9 +4,9 @@ using namespace std;
 // CÂY NHỊ PHÂN TÌM KIẾM: 
 //-Xét bất kỳ cây con. Với mỗi Node, tất cả phần tử bên trái sẽ nhỏ hơn Node đó. Tất cả cây con bên phải sẽ lớn hơn Node đó
 
-typedef struct NODE{
+typedef struct node{
     int key;
-    NODE *pLeft, *pRight;
+    node *pLeft, *pRight;
 }TNode;
 typedef TNode *Tree;
 
@@ -138,7 +138,7 @@ void printMax(Tree root){
     cout << root->key << endl;
 }
 
-void printLeaf(NODE* p){
+void printLeaf(node* p){
     if (!p)
         return;
     if (p->pLeft == NULL && p->pRight == NULL)
@@ -147,7 +147,7 @@ void printLeaf(NODE* p){
     printLeaf(p->pRight);
 }
 
-void print1Child(NODE* p){
+void print1Child(node* p){
     if (!p)
         return;
     if((p->pLeft && !p->pRight) || (!p->pLeft && p->pRight))
@@ -156,7 +156,7 @@ void print1Child(NODE* p){
     print1Child(p->pRight);
 }
 
-void printSilbing(NODE* p, int x){
+void printSilbing(node* p, int x){
     if (!p)
         return;
     if(p->pLeft->key == x)
@@ -167,7 +167,7 @@ void printSilbing(NODE* p, int x){
     printSilbing(p->pRight,x);
 }
 
-int countNode(NODE* p){
+int countNode(node* p){
     if (!p)
         return 0;
     int c = 0;
@@ -177,7 +177,7 @@ int countNode(NODE* p){
     return a+b+c;
 }
 
-int height(NODE* p){
+int height(node* p){
     if (!p)
         return -1;
     //Chiều cao bắt đầu từ 0
@@ -186,7 +186,7 @@ int height(NODE* p){
     return (max(a,b)+1);
 }
 
-int count1Odd1Even(NODE* p){
+int count1Odd1Even(node* p){
     if (!p)
         return 0;
     int c = 0;
@@ -211,19 +211,19 @@ void modifyMaxHeap(int a[], int i, int n){
     }
 }
 
-int findMaxValue(NODE* root){
+int findMaxValue(node* root){
     if (!root->pRight)
         return root->key;
     return findMaxValue(root->pRight);
 }
 
-int findMinValue(NODE* root){
+int findMinValue(node* root){
     if (!root->pLeft)
         return root->key;
     return findMinValue(root->pLeft);
 }
 
-bool isBST(NODE* root, int minValue, int maxValue){
+bool isBST(node* root, int minValue, int maxValue){
     if (root == NULL)
         return true;
 
@@ -233,15 +233,15 @@ bool isBST(NODE* root, int minValue, int maxValue){
     return isBST(root->pLeft, minValue, root->key - 1) && isBST(root->pRight,root->key + 1, maxValue);
 }
 
-void rotateRight(NODE* a){
-    NODE* b = a->pLeft;
-    NODE* T2 = b->pRight;
+void rotateRight(node* a){
+    node* b = a->pLeft;
+    node* T2 = b->pRight;
     b->pRight = a;
     a->pLeft = T2;
     a = b;
 }
 
-bool isBalanced(NODE* p){
+bool isBalanced(node* p){
     if (abs(height(p->pLeft) - height(p->pRight)) <= 1)
         return true;
     return false;

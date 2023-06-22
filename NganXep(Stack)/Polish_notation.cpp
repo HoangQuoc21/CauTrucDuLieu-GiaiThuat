@@ -5,12 +5,12 @@ using namespace std;
 //KÝ PHÁP BALAN CHUYỂN TỪ TRUNG TỐ SANG HẬU TỐ
 //VÀ CHUYỂN TỪ TRUNG TỐ SANG TIỀN TỐ
 
-struct NODE{
+struct node{
     char data;
-    NODE* pNext;
+    node* pNext;
 };
 
-typedef NODE* ptrNode;
+typedef node* ptrNode;
 
 struct Stack{
     ptrNode pTop;
@@ -21,7 +21,7 @@ void initStack(Stack &stack){
 }
 
 ptrNode createNode(char x){
-    ptrNode newNode = new NODE;
+    ptrNode newNode = new node;
     newNode->data = x;
     newNode->pNext = NULL;
     return newNode;

@@ -1,35 +1,35 @@
 #include <iostream>
 using namespace std;
 
-struct NODE{
+struct node{
     int data;
-    NODE* pNext;
+    node* pNext;
 };
 
-typedef NODE* ptrNode;
+typedef node* ptrNode;
 
-struct Clist{
+struct list{
     ptrNode pHead;
     ptrNode pTail;
 };
 
 ptrNode createNode (int x){
-    ptrNode newNode = new NODE;
+    ptrNode newNode = new node;
     newNode->data = x;
     newNode->pNext = NULL;
     return newNode;
 }
 
-void initList(Clist &list){
+void initList(list &list){
     list.pHead = list.pTail = NULL;
 }
 
-bool isEmpty(Clist list){
+bool isEmpty(list list){
     return ( list.pHead == NULL);
 }
 
 //Tìm phần tử trên DS vòng
-ptrNode searchNode(Clist list, int x){
+ptrNode searchNode(list list, int x){
     if (!isEmpty(list)){
         ptrNode temp = list.pHead;
         do{
@@ -44,7 +44,7 @@ ptrNode searchNode(Clist list, int x){
 }
 
 //Thêm phần tử vào đầu
-void insertHead(Clist &list, int x){
+void insertHead(list &list, int x){
     ptrNode newNode = createNode(x);
     if (isEmpty(list)){
         list.pHead = list.pTail = newNode;
@@ -59,7 +59,7 @@ void insertHead(Clist &list, int x){
 }
 
 //Thêm phần tử vào cuối
-void insertTail(Clist &list, int x){
+void insertTail(list &list, int x){
     ptrNode newNode = createNode(x);
     if( isEmpty(list) ){
         list.pHead = list.pTail = newNode;
@@ -72,7 +72,7 @@ void insertTail(Clist &list, int x){
     }
 }
 //Thêm phần tử sau 1 Node
-void insertAfter(Clist &list, ptrNode currNode, int x){
+void insertAfter(list &list, ptrNode currNode, int x){
     ptrNode newNode = createNode(x);
     if (isEmpty(list)){
         list.pHead = list.pTail = newNode;
@@ -89,7 +89,7 @@ void insertAfter(Clist &list, ptrNode currNode, int x){
 }
 
 //Xóa phần tử ở đầu
-void deleteHead(Clist &list){
+void deleteHead(list &list){
     if(isEmpty(list))
         return;
     //Nếu DS chỉ có 1 Node
@@ -106,7 +106,7 @@ void deleteHead(Clist &list){
 }
 
 //Xóa phần tử đứng sau 1 Node
-void deleteAfter(Clist &list, ptrNode currNode){
+void deleteAfter(list &list, ptrNode currNode){
     if(isEmpty(list))
         return;
     //Nếu DS chỉ có 1 Node
@@ -124,7 +124,7 @@ void deleteAfter(Clist &list, ptrNode currNode){
     }
 }
 
-void deleteList(Clist &list){
+void deleteList(list &list){
     ptrNode tempNode1 = list.pHead;
     ptrNode tempNode2;
     do{
@@ -136,7 +136,7 @@ void deleteList(Clist &list){
 }
 
 //In DSLK
-void printList(Clist list){
+void printList(list list){
     if (isEmpty(list))
         return;
     else{
@@ -159,7 +159,7 @@ void checkPositive(int &n){
 int main(){
     int n;
     string choice;
-    Clist l;
+    list l;
     initList(l);
 
     system("cls");

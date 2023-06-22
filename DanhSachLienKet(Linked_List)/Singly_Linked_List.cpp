@@ -1,35 +1,35 @@
 #include <iostream>
 using namespace std;
 
-typedef struct NODE* ptrNode;
+typedef struct node* ptrNode;
 
-struct NODE {
+struct node {
     int data;
     ptrNode pNext;
 };
 
-struct DList {
+struct list {
     ptrNode pHead;
     ptrNode pTail;
 };
 
-void initList(DList &l){
+void initList(list &l){
     l.pHead = NULL;
     l.pTail = NULL;
 }
 
-bool isEmpty(DList &l){
+bool isEmpty(list &l){
     return (l.pHead == NULL && l.pTail == NULL);
 }
 
 ptrNode createNode(int x){
-    ptrNode p = new NODE;
+    ptrNode p = new node;
     p->data = x;
     p->pNext = NULL;
     return p;
 }
 
-void insertHead(DList &l, int x ){
+void insertHead(list &l, int x ){
     ptrNode p = createNode(x);
     if (isEmpty(l))
         l.pHead = l.pTail = p;
@@ -39,7 +39,7 @@ void insertHead(DList &l, int x ){
     }
 }
 
-void insertTail(DList &l, int x ){
+void insertTail(list &l, int x ){
     ptrNode p = createNode(x);
     if (isEmpty(l))
         l.pTail = l.pHead = p;
@@ -49,7 +49,7 @@ void insertTail(DList &l, int x ){
     }
 }
 
-void insertAfter(DList &l, ptrNode q, int x){
+void insertAfter(list &l, ptrNode q, int x){
     ptrNode p = createNode(x);
     p->pNext = q->pNext;
     q->pNext = p;
@@ -59,7 +59,7 @@ void insertAfter(DList &l, ptrNode q, int x){
 
 
 
-void insertBefore(DList &l, ptrNode q, int x){
+void insertBefore(list &l, ptrNode q, int x){
     if (l.pHead == q)
         insertHead(l,x);
     else{
@@ -72,7 +72,7 @@ void insertBefore(DList &l, ptrNode q, int x){
     }
 }
 
-void print(DList l){
+void print(list l){
     ptrNode p = l.pHead;
     while (p){
         if(p->pNext == NULL)
@@ -86,7 +86,7 @@ void print(DList l){
         //cout << p->data << " ";
 }
 
-void deleteHead(DList &l){
+void deleteHead(list &l){
     if (l.pHead == l.pTail){
         delete l.pHead;
         l.pHead = l.pTail = NULL;
@@ -99,7 +99,7 @@ void deleteHead(DList &l){
     
 }
 
-void deleteTail (DList &l){
+void deleteTail (list &l){
     if (l.pHead == l.pTail){
         delete l.pTail;
         l.pHead = l.pTail = NULL;
@@ -114,7 +114,7 @@ void deleteTail (DList &l){
     }
 }
 
-void deleteNode (DList &l, ptrNode deletingNode){
+void deleteNode (list &l, ptrNode deletingNode){
     if (deletingNode == l.pHead)
         deleteHead(l);
     else if (deletingNode == l.pTail)
@@ -126,7 +126,7 @@ void deleteNode (DList &l, ptrNode deletingNode){
     }   
 }
 
-void removebefore(DList &list, ptrNode currNode){
+void removebefore(list &list, ptrNode currNode){
     if (isEmpty(list) || currNode == NULL)
         return;
     else if (list.pHead->pNext == currNode)
@@ -146,7 +146,7 @@ void removebefore(DList &list, ptrNode currNode){
     }
 }
 
-void deleteList(DList &l){
+void deleteList(list &l){
     ptrNode tempNode1;
     ptrNode tempNode2 = l.pHead;
     while (tempNode2){
@@ -157,7 +157,7 @@ void deleteList(DList &l){
     l.pHead = l.pTail = NULL;
 }
 
-ptrNode findItembyData (DList l, int x){
+ptrNode findItembyData (list l, int x){
     ptrNode p = l.pHead;
     while (p){
         if (p->data == x)
@@ -167,7 +167,7 @@ ptrNode findItembyData (DList l, int x){
     return p;
 }
 
-ptrNode findItemByIndex (DList l, int i){
+ptrNode findItemByIndex (list l, int i){
    ptrNode p = l.pHead;
    int temp = 0;
    while (p){
@@ -195,7 +195,7 @@ void checkPosition(int &index, int n){
     }
 }
 
-int countNumberOfValue(DList l, int x){
+int countNumberOfValue(list l, int x){
     ptrNode p = l.pHead;
     int count = 0;
     while(p){
@@ -206,13 +206,13 @@ int countNumberOfValue(DList l, int x){
     return count;
 }
 
-void createListFromArray(DList &l, int a[], int n){
+void createListFromArray(list &l, int a[], int n){
     for (int i = 0; i < n; i++){
         insertTail(l, a[i]);
     }
 }
 
-void create2NewLinkedList(DList originalList, DList &newList1, DList &newList2){
+void create2NewLinkedList(list originalList, list &newList1, list &newList2){
     ptrNode temp = originalList.pHead;
     while(temp){
         //Lẻ
@@ -247,7 +247,7 @@ void MoveToFront(ptrNode &Head, ptrNode &Tail, ptrNode MovingNode){
     }
 }
 
-void reverseList(DList &list){
+void reverseList(list &list){
     if (isEmpty(list))
         return;
     else{
@@ -264,7 +264,7 @@ void reverseList(DList &list){
     }
 }
 
-int countNode (DList list){
+int countNode (list list){
     int count = 0;
     if (!isEmpty(list)){
         ptrNode tempNode = list.pHead;
@@ -276,7 +276,7 @@ int countNode (DList list){
     return count;
 }
 
-void findKNode(DList list, int k){
+void findKNode(list list, int k){
     //Nếu tính vị trí của Node đầu tiên là 0
     if (k-1 < 0 || k - 1 >= countNode(list)|| isEmpty(list))
         return;
@@ -295,7 +295,7 @@ void findKNode(DList list, int k){
 int main(){
     int n;
     string choice;
-    DList l;
+    list l;
     initList(l);
 
     system("cls");

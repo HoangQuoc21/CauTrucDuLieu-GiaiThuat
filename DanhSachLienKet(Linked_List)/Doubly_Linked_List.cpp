@@ -1,13 +1,13 @@
 #include <iostream>
 using namespace std;
  
-struct NODE  {
+struct node  {
     int data;
-    NODE* pNext;
-    NODE* pPrev;
+    node* pNext;
+    node* pPrev;
 };
 
-typedef NODE* ptrNode;
+typedef node* ptrNode;
 
 struct Dlist{
     ptrNode pHead;
@@ -22,7 +22,7 @@ void initList(Dlist &list){
  
 
 ptrNode createNode(int x) {
-    ptrNode newNode = new NODE;
+    ptrNode newNode = new node;
     newNode->data = x;
     newNode->pPrev = NULL;
     newNode->pNext = NULL;

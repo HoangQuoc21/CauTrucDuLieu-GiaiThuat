@@ -1,12 +1,12 @@
 #include <iostream>
 using namespace std;
 
-struct NODE{
+struct node{
     int key;
-    NODE* pLeft, *pRight;
+    node* pLeft, *pRight;
 };
 
-typedef NODE* TNode;
+typedef node* TNode;
 
 void NLR(TNode root){
     if (root){
@@ -33,7 +33,7 @@ void LRN(TNode root){
 }
 
 TNode createNode(int x){
-    TNode newNode = new NODE;
+    TNode newNode = new node;
     newNode->key = x;
     newNode->pLeft = newNode->pRight = NULL;
     return newNode;
