@@ -1,170 +1,85 @@
 #include <iostream>
-#include <queue>
-using namespace std;
-#define LH = -1; //Cây con trái cao hơn
-#define EH = 0; //Hai cây con cao bằng nhau
-#define RH = 1; //Cây con phải cao hơn
-
-struct AVLNODE{
-    int key;
-    AVLNODE* pLeft;
-    AVLNODE* pRight;
-    int height;
-};
-
-AVLNODE* createAVLNODE(int data){
-    AVLNODE* newNode = new AVLNODE;
-    newNode->pLeft = newNode->pRight = NULL;
-    int height = 1;
-    return newNode;
-}
-
-//Chiều cao của cây (height) Nếu cây chỉ có 1 AVLNODE thì chiều cao là 1
-//Hàm lấy chiều cao của 1 AVLNode
-int Height(AVLNODE* node){
-    if (!node)
-        return 0;
-    return node->height;
-}
-
-// Balance: Chỉ số cân bằng. tính bằng độ cao cây con phải trừ độ cao cây con trái
-//Hàm xác định chỉ số cân bằng tại AVLNode đang xét
-int getBalance(AVLNODE* node){
-    if(!node)
-        return 0;
-    return Height(node->pLeft) - Height(node->pRight); 
-}
-
-//Quay cây phải, đơn bước
-void rightRotate(AVLNODE* &y){
-    AVLNODE* x = y->pLeft;
-    AVLNODE* T2 = x->pRight;
-
-    //Quay
-    x->pRight = y;
-    y->pLeft = T2;
-
-    //Cập nhật lại chiều cao
-    y->height = max(Height(y->pLeft), Height(y->pRight)) + 1;
-    x->height = max(Height(x->pLeft), Height(x->pRight)) + 1;
-
-    //Trả node mới lại
-    y = x;
-}
-//VD quay phải:
-//          y                                      x 
-//         / \                                   /   \
-//        x   T4      Right Rotate (y)          z      y
-//       / \          - - - - - - - - ->      /  \    /  \ 
-//      z   T2                               T1  T3  T2  T4
-//     / \
-//   T1   T3 
-
-//Quay cây trái, đơn bước
-void leftRotate(AVLNODE* &x){
-    AVLNODE* y = x->pRight;
-    AVLNODE* T2 = y->pLeft;
-
-    //Quay
-    y->pLeft = x;
-    x->pRight = T2;
-
-    //Cập nhật lại chiều cao
-    x->height = max(Height(x->pLeft), Height(x->pRight)) + 1;
-    y->height = max(Height(y->pLeft), Height(y->pRight)) + 1;
-
-    //Trả node mới lại
-    x = y;
-}
-//VD quay trái:
-//    x                               y
-//  /  \                            /   \ 
-// T1   y     Left Rotate(x)       x      z
-//     /  \   - - - - - - - ->    / \    / \
-//    T2   z                     T1  T2 T3  T4
-//        / \
-//      T3  T4
-
-
-void InsertAVL(AVLNODE* &pRoot, int x){
-    if (!pRoot){
-        AVLNODE* newNode = createAVLNODE(x);
-        pRoot = newNode;
-    }
-    if (x < pRoot->key)
-        InsertAVL(pRoot->pLeft,x);
-    else if (x > pRoot->key)
-        InsertAVL(pRoot->pRight,x);
-    
-    int balance = getBalance(pRoot);
-
-    //mất cân bằng trái trái
-    if (balance > 1 && x < pRoot->pLeft->key)
-        rightRotate(pRoot);
-
-    //mất cân bằng phải phải
-    if (balance < -1 && x > pRoot->pRight->key)
-        leftRotate(pRoot);
-
-    //mất cân bằng trái phải
-    if (balance > 1 && x > pRoot->pLeft->key){
-        leftRotate(pRoot->pLeft);
-        rightRotate(pRoot);
-    }
-
-    //mất cân bằng phải trái
-    if (balance < -1 && x < pRoot->pRight->key){
-        rightRotate(pRoot->pRight);
-        leftRotate(pRoot);
-    }
-}
-
-void RemoveAVL(AVLNODE* &pRoot, int x){
-
-}
-
-// bool isAVL(AVLNODE* pRoot){
-
-// }
-
-void LevelOrder(AVLNODE* pRoot){
-    if(!pRoot)
-        return;
-
-    queue<AVLNODE*> nodeQueue;
-    nodeQueue.push(pRoot);
-    while(!nodeQueue.empty()){
-        AVLNODE* currNode = nodeQueue.front();
-        cout << currNode->key << " ";
-        nodeQueue.pop();
-        if (currNode->pLeft)
-            nodeQueue.push(currNode->pLeft);
-        if (currNode->pRight)
-            nodeQueue.push(currNode->pRight);
-    }
-}
-
-void preOrder(AVLNODE *root)
-{
-    if(root != NULL)
-    {
-        cout << root->key << " ";
-        preOrder(root->pLeft);
-        preOrder(root->pRight);
-    }
-}
-
+#include "AVLTree.h"
 
 int main(){
-    cout << "hehe\n";
-    AVLNODE* pRoot = NULL;
-    InsertAVL(pRoot, 10);
-    InsertAVL(pRoot, 20);
-    InsertAVL(pRoot, 30);
-    InsertAVL(pRoot, 40);
-    InsertAVL(pRoot, 50);
-    InsertAVL(pRoot, 55);
-    cout << "haha" << endl;
-    preOrder(pRoot);
+    NODE* pRoot = NULL;
+
+    //=== Vài TH Nhập tự động trước 1 số node (Nếu muốn, thầy hãy mở khóa những dòng dưới và chỉnh sửa ạ) ====
+    //-- Case1: --
+    // int nNode = 13;
+    // int a[13] = {45,36,15,29,57,78,60,83,79,96,20,99,97};
+    // -- Case2: --
+    // int nNode = 11;
+    // int a[11] = {33,14,15,92,64,35,79,27,38,105,99};
+    // -- Case3: --
+    // int nNode = 10;
+    // int a[10] = {22,1,13,11,24,33,18,42,31,32};
+
+    //-- 2 dòng dưới đây để tự động thêm node dựa theo case ở trên --
+    // for (int i = 0; i < nNode; i++)
+    //     Insert(pRoot, a[i]);
+
+    while(1){
+        string choice;
+        system("cls");
+        cout << "*******************************************************\n";
+        cout << "*                HOME WORK 3: AVL TREE                *\n";
+        cout << "*******************************************************\n";
+        cout << "-Cay da nhap in theo tien thu tu: ";
+        NLR(pRoot);
+        cout << "\n-Cay da nhap in theo trung thu tu: ";
+        LNR(pRoot);
+        cout << "\n-Cay da nhap in theo hau thu tu: ";
+        LRN(pRoot);
+        cout << "\n-Cay da nhap in theo muc: ";
+        LevelOrder(pRoot);
+        if (countNode(pRoot) == 0)
+            cout << "\n-Cay hien tai chua co Node nao het.\n";
+        else{
+            cout << "\n-Cay hien tai co " << countNode(pRoot) << " Node.\n";
+            if (isAVL(pRoot))
+                cout << "-Day la cay AVL.\n";
+            else
+                cout << "-Day khong phai la cay AVL.\n";
+        }
+        cout << "======================== MENU ========================\n";
+        cout << "1. Them 1 Node vao cay.\n";
+        cout << "2. Xoa 1 Node khoi cay.\n";
+        cout << "0. Thoat chuong trinh.\n";
+        cout << "======================== END =========================\n";
+        cout << "Nhap vao lua chon cua ban: ";
+        cin >> choice;
+        cout << "-------------------------------------------------------\n";
+        if (choice == "1"){
+            int data;
+            cout << "Nhap vao gia tri muon them vao cay: ";
+            cin >> data;
+            if (isExsited(pRoot, data))
+                cout << "Da ton tai gia tri " << data << " san trong cay nen khong can them.\n";
+            else{
+                cout << "Da them Node mang gia tri " << data << " vao cay.\n";
+                Insert(pRoot, data);
+            }  
+        }
+        else if (choice == "2"){
+            int data;
+            cout << "Nhap vao gia tri muon xoa khoi cay: ";
+            cin >> data;
+            if (isExsited(pRoot,data)){
+                cout << "Da xoa Node mang gia tri " << data << " khoi cay.\n";
+                Remove(pRoot,data);  
+            }
+            else
+                cout << "Khong ton tai gia tri " << data << " de xoa trong cay.\n";
+        }
+        else if (choice == "0"){
+            cout << "Thoat chuong trinh.\n";
+            break;
+        }
+        else
+            cout << "Lua chon khong hop le.\n";
+        
+        system("pause");
+    }
     return 0;
 }
