@@ -315,3 +315,10 @@ int countNode(NODE* pRoot){
     int b = countNode(pRoot->pRight);
     return 1 + a + b;
 }
+
+//Hàm hủy cây AVL
+void destroyTree(NODE* &pRoot) {
+    while (countNode(pRoot) != 0)
+        Remove(pRoot, pRoot->key);
+    pRoot = NULL;
+}

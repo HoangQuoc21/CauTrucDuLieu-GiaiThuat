@@ -81,5 +81,7 @@ int main(){
         
         system("pause");
     }
+
+    destroyTree(pRoot);
     return 0;
 }
